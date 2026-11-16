@@ -9,6 +9,7 @@ import type { App } from "../app.ts";
 import type { NPart } from "../course.ts";
 import { to } from "../router.ts";
 import { supplementTag } from "./Tag.ts";
+import { printView } from "../print.ts";
 
 export interface NotesPanel {
   el: HTMLElement;
@@ -51,9 +52,11 @@ export function notesPanel(app: App, part: NPart, onClose: () => void): NotesPan
     { class: "sk-notes", id: `notes-${part.id}`, "aria-labelledby": titleId },
     h("div", { class: "sk-notes__head" }, h("h2", { class: "sk-heading", id: titleId }, sv.notes.title), closeBtn),
     part.keyPoints.length
-      ? h("section", { class: "sk-card sk-stack" },
+      ? h("section", { class: "sk-card sk-stack", "data-keypoints": "" },
           h("h3", { class: "sk-eyebrow" }, sv.notes.keyPoints),
+          h("p", { class: "sk-heading sk-printonly" }, sv.print.keyPointsTitle(`${sv.nav.part(part.n)} · ${part.title}`)),
           h("ul", null, part.keyPoints.map((k) => h("li", null, app.mdInline(k)))),
+          h("div", null, h("button", { class: "sk-btn sk-btn--sm", type: "button", "data-print-button": "viktigast", onclick: () => printView("viktigast") }, icon("print", 16), sv.print.keyPoints)),
         )
       : null,
     h("section", { class: "sk-card sk-stack" },

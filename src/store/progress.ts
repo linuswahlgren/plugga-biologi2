@@ -58,6 +58,8 @@ export interface Progress {
     theme: Theme;
     sessionDefaults: Record<string, Record<string, string>>;
     introDismissed: boolean;
+    /** "Inte nu" on the backup card hides it until this day (YYYY-MM-DD). Additive field. */
+    backupSnoozedUntil: string | null;
   };
 }
 
@@ -76,7 +78,7 @@ export function emptyProgress(courseId: string): Progress {
     notes: {},
     activity: {},
     session: null,
-    settings: { theme: "system", sessionDefaults: {}, introDismissed: false },
+    settings: { theme: "system", sessionDefaults: {}, introDismissed: false, backupSnoozedUntil: null },
   };
 }
 

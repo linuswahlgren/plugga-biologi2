@@ -228,3 +228,19 @@
 .sk-boxes .sk-stat { padding: var(--space-3); }
 .sk-stats--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 1023px) { .sk-stats--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- Phase 4: Dela, QR, backup ---------- */
+.sk-topbar__share { gap: var(--space-1); }
+@media (max-width: 519px) {
+  .sk-topbar__sharelabel { display: none; }
+  .sk-topbar__share { width: var(--control-height); padding: 0; min-height: var(--control-height); border-color: transparent; }
+}
+.sk-dialog--share { width: min(440px, calc(100vw - 32px)); }
+.sk-qrwrap { display: flex; justify-content: center; }
+/* A QR code must stay dark on light in both themes so cameras can read it. */
+.sk-qr { width: min(280px, 70vw); height: auto; border-radius: var(--radius-md); box-shadow: inset 0 0 0 1px var(--line); }
+.sk-qr__bg { fill: var(--qr-light); }
+.sk-qr__fg { fill: var(--qr-dark); }
+.sk-textarea--code { min-height: 72px; font-family: var(--font-mono); font-size: 13px; line-height: 20px; word-break: break-all; }
+.sk-error { display: flex; align-items: center; gap: var(--space-2); color: var(--danger-ink); font-weight: 600; }
+.sk-error:empty { display: none; }

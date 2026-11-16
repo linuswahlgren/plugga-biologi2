@@ -1,6 +1,6 @@
 /**
  * Sticky top bar: menu button (below 860 px), breadcrumb (every crumb is a link; below 860 px it
- * collapses to a back chevron plus the current context), theme toggle.
+ * collapses to a back chevron plus the current context), "Dela" (link and QR code), theme toggle.
  */
 import { h, replace } from "../dom.ts";
 import { icon } from "../icons.ts";
@@ -14,7 +14,7 @@ export interface TopBar {
   setTheme(effective: "light" | "dark"): void;
 }
 
-export function createTopBar(opts: { onMenu: () => void; onTheme: () => void }): TopBar {
+export function createTopBar(opts: { onMenu: () => void; onTheme: () => void; onShare: () => void }): TopBar {
   const menuButton = h(
     "button",
     { class: "sk-iconbtn sk-topbar__menu", type: "button", "aria-label": sv.nav.menuOpen, "aria-controls": "sk-sidebar", "aria-expanded": "false", onclick: opts.onMenu },
@@ -23,8 +23,14 @@ export function createTopBar(opts: { onMenu: () => void; onTheme: () => void }):
   const full = h("nav", { class: "sk-crumbs sk-crumbs--full", "aria-label": sv.nav.breadcrumb });
   const compact = h("nav", { class: "sk-crumbs sk-crumbs--compact", "aria-label": sv.nav.breadcrumb });
   const themeBtn = h("button", { class: "sk-iconbtn", type: "button", onclick: opts.onTheme });
+  const shareBtn = h(
+    "button",
+    { class: "sk-btn sk-btn--sm sk-topbar__share", type: "button", "aria-label": sv.share.button, title: sv.share.button, onclick: opts.onShare, "data-share-button": "" },
+    icon("share", 16),
+    h("span", { class: "sk-topbar__sharelabel", "aria-hidden": "true" }, sv.share.button),
+  );
 
-  const el = h("header", { class: "sk-topbar" }, menuButton, full, compact, h("div", { class: "sk-topbar__actions" }, themeBtn));
+  const el = h("header", { class: "sk-topbar" }, menuButton, full, compact, h("div", { class: "sk-topbar__actions" }, shareBtn, themeBtn));
 
   return {
     el,

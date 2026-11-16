@@ -2,8 +2,8 @@
  * Mina framsteg (BUILD.md §4.9): everything about the student's own work.
  * Activity (last 7 and 28 days), mastery per exam and per part with status tags and study
  * questions, cards per Leitner box and due today / this week, Mina missar, quiz history,
- * where the data lives, and reset per part, per exam or everything (each confirmed in words).
- * Saving and loading a copy arrive in Phase 4.
+ * where the data lives, saving and loading a copy (file or text code), adding Plugga to the home
+ * screen, and reset per part, per exam or everything (each confirmed in words).
  */
 import { h } from "../dom.ts";
 import { icon } from "../icons.ts";
@@ -21,6 +21,8 @@ import { statTile } from "../components/StatTile.ts";
 import { activityStrip } from "../components/ActivityStrip.ts";
 import { quizHistory } from "../components/QuizHistory.ts";
 import { emptyProgress, type Progress } from "../store/progress.ts";
+import { backupPanel } from "../components/Backup.ts";
+import { isPersisted } from "../pwa.ts";
 
 function clearPart(app: App, p: Progress, part: NPart): void {
   for (const l of part.lessons) delete p.lessons[l.id];
@@ -143,6 +145,11 @@ export function progressView(app: App): ViewResult {
     navigate(to.progress());
   });
 
+  const persistedLine = h("p", { class: "sk-small sk-muted", hidden: true, "data-persisted": "" }, sv.backup.persisted);
+  void isPersisted().then((yes) => {
+    persistedLine.hidden = !yes;
+  });
+
   const page = h(
     "div",
     { class: "sk-page" },
@@ -158,7 +165,18 @@ export function progressView(app: App): ViewResult {
     h("section", { class: "sk-card sk-stack", "aria-labelledby": "prog-privacy" },
       h("h2", { class: "sk-heading", id: "prog-privacy" }, sv.progress.privacyTitle),
       h("p", null, sv.progress.privacy),
+      __BUILD_TARGET__ === "backup" ? h("p", { class: "sk-box sk-box--mistake", "data-backup-file-note": "" }, sv.backup.backupFileNote) : null,
+      persistedLine,
     ),
+    backupPanel(app),
+    __BUILD_TARGET__ === "backup"
+      ? null
+      : h("section", { class: "sk-card sk-stack", "aria-labelledby": "prog-install", "data-install": "" },
+          h("h2", { class: "sk-heading", id: "prog-install" }, sv.install.title),
+          h("p", null, sv.install.text),
+          h("ul", { class: "sk-list sk-list--2" }, h("li", null, app.mdInline(sv.install.iphone)), h("li", null, app.mdInline(sv.install.android))),
+          h("p", { class: "sk-small sk-muted" }, sv.install.iphoneStorage),
+        ),
     h("section", { class: "sk-card sk-stack", "aria-labelledby": "prog-reset" },
       h("h2", { class: "sk-heading", id: "prog-reset" }, sv.progress.resetTitle),
       h("div", { class: "sk-stack sk-stack--2" }, h("label", { class: "sk-label", for: "reset-what" }, sv.progress.resetWhat), select),

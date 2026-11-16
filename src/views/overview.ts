@@ -18,6 +18,7 @@ import { statTile } from "../components/StatTile.ts";
 import { partCard } from "../components/PartCard.ts";
 import { introCard } from "../components/IntroCard.ts";
 import { hubLabel } from "../components/Sidebar.ts";
+import { backupCard } from "../components/Backup.ts";
 
 export function overviewView(app: App): ViewResult {
   const c = app.course;
@@ -87,6 +88,7 @@ export function overviewView(app: App): ViewResult {
     hero,
     upcoming ? examCountdown(app, upcoming) : null,
     stats,
+    backupCard(app),
     current,
     reviewSection,
     p.settings.introDismissed ? null : introCard(app, () => {}),

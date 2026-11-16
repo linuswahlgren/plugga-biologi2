@@ -1,6 +1,6 @@
 # Plugga components
 
-Components that are new compared with the earlier Study Kit. They are built from the same tokens (`docs/design-system.md`) so they can be added to the design system later. Each entry lists its purpose, anatomy, states and Swedish copy. Phase 1 covers the components the shell needs. Phase 2 added the session, practice and progress components (below), and Phase 4 adds the sharing ones. Implementations live in `src/components/`, one file each.
+Components that are new compared with the earlier Study Kit. They are built from the same tokens (`docs/design-system.md`) so they can be added to the design system later. Each entry lists its purpose, anatomy, states and Swedish copy. Phase 1 covers the components the shell needs. Phase 2 added the session, practice and progress components, and Phase 4 the sharing and backup ones (below). Implementations live in `src/components/`, one file each.
 
 ## ExamGroup (sidebar) — `Sidebar.ts`
 - **Purpose:** Groups the parts in the sidebar by exam, newest first, with that exam's hub link above its parts.
@@ -117,3 +117,33 @@ Components that are new compared with the earlier Study Kit. They are built from
 
 ### ProgressPage — `views/progress.ts`
 - **Sections:** Aktivitet · one card per exam (mastery, parts with status tags, "Instuderingsfrågor: 9 av 17 kan jag") · Kort (Låda 1–5, "Att repetera idag", "Att repetera inom en vecka", "Repetera idag") · Mina missar ("5 frågor i Mina missar", "Öva på missarna", how a question leaves the bank) · Quizhistorik · Var dina framsteg sparas · Rensa framsteg ("Vad vill du rensa?": everything, a whole exam or one part; the dialog says exactly what is removed and that notes are kept).
+
+## Phase 4: sharing and keeping progress
+
+### ShareDialog ("Dela") — `ShareDialog.ts`
+- **Purpose:** Share the current view, in Teams or projected in class.
+- **Anatomy:** a top-bar button (share icon + "Dela"; icon only below 520 px, `aria-label` "Dela"). Clicking copies the link at once (toast "Länken är kopierad") and opens a native modal dialog: "Dela den här sidan", one line of help, a QR code, "Länk" with a read-only field, "Kopiera länken".
+- **QR code:** made locally with uqr (MIT), drawn as one SVG path, always `--qr-dark` on `--qr-light` (black on white) in both themes so cameras can read it.
+- **Link:** this page on the hosted site; from the backup file, the published address plus the same route. A running session shares its builder (`?fortsatt=1` is removed).
+- **States:** if copying is blocked, the dialog says "Det gick inte att kopiera. Markera länken och kopiera den själv."
+
+### UpdateToast — `pwa.ts` + `Toast.ts`
+- **Purpose:** Tell students when new material is published.
+- **Behaviour:** the hosted site compares `version.json` with its own build time, 1.5 s after load and whenever the tab becomes visible. A newer version shows one quiet toast "Nytt material finns." with "Ladda om". It stays until used.
+
+### BackupCard — `Backup.ts`
+- **Purpose:** A reminder to save a copy, on the overview only.
+- **Rule:** shown when the student has real progress, has no copy from the last 14 days, and has not pressed "Inte nu" in the last 7 days.
+- **Anatomy:** "Spara en kopia av dina framsteg", one sentence, "Spara" (primary, downloads the file) and "Inte nu" (quiet).
+
+### BackupPanel — `Backup.ts`
+- **Purpose:** On Mina framsteg: save a copy, load a copy, and move progress between phone and computer.
+- **Anatomy:** "Spara och flytta dina framsteg", what loading does ("det bästa från båda"), "Senast sparad: mån 16 nov" or "Du har inte sparat någon kopia än.", buttons "Spara en kopia" (download), "Läs in en kopia" (file picker), "Kopiera kod" (shows the code in a monospace field and copies it), and "Klistra in en kod" with "Läs in koden".
+- **Errors** (`role="alert"`, icon and word): "Det här är ingen kopia från Plugga.", "Kopian gäller en annan kurs.", "Kopian är från en nyare version av Plugga. Ladda om sidan och försök igen."
+- **Merge:** lessons from both, the higher card box, the best quiz score per part, both quiz histories (last 50), practice solved in either, "kan" over "inte än", notes from both, activity from both. Mina missar follows the more recently updated copy. Settings stay as they are on this device.
+
+### Install tips — `views/progress.ts`
+- **Purpose:** "Lägg till Plugga på hemskärmen", with the iPhone (Safari › Dela › Lägg till på hemskärmen) and Android (Chrome › ⋮ › Installera app) steps, and a note that Safari can clear data for sites not used for a while unless Plugga is opened from the home screen. Not shown in the backup file, which shows "Det här är reservfilen …" instead.
+
+### Print views — `print.ts` + `print.css`
+- **Purpose:** "Skriv ut" on the glossary and the study questions, and "Skriv ut viktigast" in the notes panel. The button sets `data-print` on `<html>`; print.css then prints only that view in black on white: every glossary term (even if a search hides some), every study question with its model answer, or the part's key points under "Viktigast · Del 3 · Fotosyntesen".

@@ -30,7 +30,8 @@ export default defineConfig({
     { name: "firefox", testMatch: e2e, use: { ...devices["Desktop Firefox"] } },
     { name: "webkit", testMatch: e2e, use: { ...devices["Desktop Safari"] } },
   ],
-  webServer: [
+  // PLUGGA_UNIT_ONLY=1 (the deploy workflow) runs the Node specs without starting the preview servers.
+  webServer: process.env.PLUGGA_UNIT_ONLY ? undefined : [
     { command: "npm run preview", url: "http://localhost:4173/", reuseExistingServer: !process.env.CI, timeout: 120_000 },
     { command: "npm run preview:e2e", url: "http://localhost:4174/", reuseExistingServer: !process.env.CI, timeout: 120_000 },
   ],

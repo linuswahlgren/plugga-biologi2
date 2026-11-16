@@ -1,9 +1,46 @@
-/* Print: only the content column. Print views for the glossary, study questions and key points come in Phase 4. */
+/* Print. Without a print view: only the content column. With html[data-print] (set by a
+   "Skriv ut" button, see src/print.ts): only the glossary, the study questions with their model
+   answers, or a part's key points. Printing is always black on white. */
+.sk-printonly { display: none; }
+
 @media print {
-  :root { --bg: #ffffff; --surface: #ffffff; --surface-sunken: #ffffff; --ink: #000000; --ink-muted: #333333; --line: #bbbbbb; }
-  .sk-sidebar, .sk-topbar, .sk-notes__toggle, .sk-toastregion, .sk-banner, .sk-skip, .sk-noprint { display: none !important; }
+  :root, :root[data-theme="dark"] {
+    color-scheme: light;
+    --bg: #ffffff; --surface: #ffffff; --surface-sunken: #ffffff; --ink: #000000; --ink-muted: #333333;
+    --line: #bbbbbb; --line-strong: #888888; --accent-soft: #ffffff; --accent-ink: #000000;
+  }
+  .sk-sidebar, .sk-topbar, .sk-notes__toggle, .sk-toastregion, .sk-banner, .sk-skip, .sk-noprint, .sk-scrim, dialog { display: none !important; }
+  .sk-printonly { display: block; }
   .sk-app { display: block; }
   .sk-main { padding: 0; }
-  .sk-card { border-color: #bbbbbb; break-inside: avoid; }
+  .sk-card { border-color: #bbbbbb; break-inside: avoid; box-shadow: none; }
   a { color: inherit; text-decoration: none; }
+
+  /* Any print view: no controls. */
+  html[data-print] main .sk-btn, html[data-print] main .sk-tabs, html[data-print] main textarea,
+  html[data-print] main input, html[data-print] main .sk-progress, html[data-print] main .sk-meter { display: none !important; }
+
+  /* Glossary and study questions: the page head and the section only, every term shown. */
+  html[data-print="begrepp"] main .sk-page > *:not(.sk-pagehead):not(.sk-tabpanel),
+  html[data-print="fragor"] main .sk-page > *:not(.sk-pagehead):not(.sk-tabpanel) { display: none !important; }
+  html[data-print="begrepp"] [data-glossary] section[hidden],
+  html[data-print="begrepp"] [data-glossary] [data-term][hidden] { display: revert !important; }
+  html[data-print="begrepp"] .sk-term { break-inside: avoid; }
+
+  html[data-print="fragor"] [data-study-list] .sk-lesson__body[hidden],
+  html[data-print="fragor"] [data-study-list] [id^="sq-model-"][hidden] { display: flex !important; }
+  html[data-print="fragor"] [data-study-list] .sk-lesson__body > label,
+  html[data-print="fragor"] [data-study-list] .sk-lesson__body > .sk-small,
+  html[data-print="fragor"] [data-study-list] .sk-lesson__chev { display: none !important; }
+  html[data-print="fragor"] [data-study-list] .sk-lesson { break-inside: auto; }
+
+  /* Key points: only the notes panel's "Viktigast" card, with its print title. */
+  html[data-print="viktigast"] main .sk-page { display: none !important; }
+  html[data-print="viktigast"] .sk-pagegrid { display: block; }
+  html[data-print="viktigast"] .sk-notes {
+    position: static !important; transform: none !important; visibility: visible !important;
+    max-height: none; overflow: visible; box-shadow: none; border: 0; padding: 0; width: auto;
+  }
+  html[data-print="viktigast"] .sk-notes > :not([data-keypoints]) { display: none !important; }
+  html[data-print="viktigast"] [data-keypoints] > .sk-eyebrow { display: none; }
 }

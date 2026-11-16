@@ -87,6 +87,7 @@ function sanitizeV2(raw: Obj, courseId: string): Progress {
     const s = raw.settings;
     if (s.theme === "light" || s.theme === "dark" || s.theme === "system") p.settings.theme = s.theme;
     p.settings.introDismissed = s.introDismissed === true;
+    p.settings.backupSnoozedUntil = isStr(s.backupSnoozedUntil) && ISO_DAY.test(s.backupSnoozedUntil) ? s.backupSnoozedUntil.slice(0, 10) : null;
     if (isObj(s.sessionDefaults)) {
       for (const [mode, vals] of Object.entries(s.sessionDefaults)) if (isObj(vals)) p.settings.sessionDefaults[mode] = stringMap(vals);
     }

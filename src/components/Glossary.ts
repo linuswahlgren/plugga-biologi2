@@ -13,6 +13,7 @@ import { plainText } from "../markup.ts";
 import { KNOWN_BOX } from "../mastery.ts";
 import { termsOfExam } from "../session.ts";
 import { extraTermTag, supplementTag } from "./Tag.ts";
+import { printView } from "../print.ts";
 
 /** Lower case without diacritics, for searching only. Answer matching keeps å, ä and ö apart. */
 export function searchKey(s: string): string {
@@ -29,7 +30,7 @@ export function glossary(app: App, exam: Exam): HTMLElement {
   const searchInput = h("input", { class: "sk-input", id: `gl-search-${exam.id}`, type: "search", autocomplete: "off", spellcheck: "false", placeholder: sv.glossary.searchPlaceholder });
   const onlyUnknown = h("input", { type: "checkbox", class: "sk-choice__input", id: `gl-unknown-${exam.id}` });
   const countLine = h("p", { class: "sk-small sk-muted sk-num", "aria-live": "polite", "data-glossary-count": "" });
-  const none = h("p", { class: "sk-muted", hidden: true }, sv.glossary.none);
+  const none = h("p", { class: "sk-muted sk-noprint", hidden: true }, sv.glossary.none);
 
   const entries = terms.map((t) => {
     const part = c.partById.get(t.week);
@@ -80,7 +81,7 @@ export function glossary(app: App, exam: Exam): HTMLElement {
   return h(
     "div",
     { class: "sk-stack sk-stack--4", "data-glossary": exam.id },
-    h("section", { class: "sk-card sk-stack" },
+    h("section", { class: "sk-card sk-stack sk-noprint" },
       h("p", { class: "sk-muted" }, sv.glossary.intro),
       h("div", { class: "sk-stack sk-stack--2" },
         h("label", { class: "sk-label", for: searchInput.id }, sv.glossary.search),
@@ -89,7 +90,10 @@ export function glossary(app: App, exam: Exam): HTMLElement {
       h("label", { class: "sk-choice", for: onlyUnknown.id }, onlyUnknown, h("span", { class: "sk-choice__label" }, sv.glossary.onlyUnknown)),
       h("div", { class: "sk-sectionhead" },
         countLine,
-        h("a", { class: "sk-btn", href: to.session("kort", { urval: `begrepp:${exam.id}` }) }, icon("flip", 18), sv.glossary.practise),
+        h("div", { class: "sk-btnrow" },
+          h("a", { class: "sk-btn", href: to.session("kort", { urval: `begrepp:${exam.id}` }) }, icon("flip", 18), sv.glossary.practise),
+          h("button", { class: "sk-btn", type: "button", "data-print-button": "begrepp", onclick: () => printView("begrepp") }, icon("print", 18), sv.print.button),
+        ),
       ),
     ),
     none,

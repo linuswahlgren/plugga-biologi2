@@ -443,6 +443,64 @@ export const sv = {
     intro: "En provsimulering blandar frågor från provets alla delar. Svaren visas först när du lämnar in, som på ett riktigt prov.",
   },
 
+  update: {
+    available: "Nytt material finns.",
+    reload: "Ladda om",
+  },
+
+  share: {
+    button: "Dela",
+    title: "Dela den här sidan",
+    text: "Länken går direkt till sidan du är på. Visa QR-koden i klassrummet, så kan alla öppna sidan med mobilkameran.",
+    linkLabel: "Länk",
+    copy: "Kopiera länken",
+    copied: "Länken är kopierad",
+    copyFailed: "Det gick inte att kopiera. Markera länken och kopiera den själv.",
+    qrAlt: "QR-kod med länken till sidan",
+    close: "Stäng",
+  },
+
+  backup: {
+    cardTitle: "Spara en kopia av dina framsteg",
+    cardText: "Dina framsteg finns bara på den här enheten. Spara en kopia ibland, så kan du läsa in den om något försvinner.",
+    save: "Spara",
+    notNow: "Inte nu",
+    sectionTitle: "Spara och flytta dina framsteg",
+    sectionText: "Spara en kopia som fil, eller kopiera en kod som du kan klistra in på en annan enhet. När du läser in en kopia behålls det bästa från båda.",
+    saveFile: "Spara en kopia",
+    loadFile: "Läs in en kopia",
+    copyCode: "Kopiera kod",
+    codeLabel: "Din kod",
+    codeHint: "Klistra in koden i Plugga på din andra enhet, till exempel genom att skicka den till dig själv.",
+    pasteLabel: "Klistra in en kod",
+    loadCode: "Läs in koden",
+    lastSaved: (date: string) => `Senast sparad: ${date}`,
+    neverSaved: "Du har inte sparat någon kopia än.",
+    saved: "Kopian är sparad",
+    codeCopied: "Koden är kopierad",
+    loaded: "Kopian är inläst. Det bästa från båda är sparat.",
+    errorFormat: "Det här är ingen kopia från Plugga.",
+    errorCourse: "Kopian gäller en annan kurs.",
+    errorVersion: "Kopian är från en nyare version av Plugga. Ladda om sidan och försök igen.",
+    backupFileNote: "Det här är reservfilen. Framstegen här sparas separat från länken. Använd länken när du kan.",
+    persisted: "Webbläsaren har lovat att inte rensa dina framsteg automatiskt.",
+    fileName: (courseId: string, date: string) => `plugga-${courseId}-${date}.json`,
+  },
+
+  install: {
+    title: "Lägg till Plugga på hemskärmen",
+    text: "Då öppnar du Plugga med ett tryck, och den fungerar även utan nät.",
+    iphone: "**iPhone:** öppna länken i Safari, tryck på Dela och välj Lägg till på hemskärmen.",
+    android: "**Android:** öppna länken i Chrome, tryck på menyn ⋮ och välj Installera app eller Lägg till på startskärmen.",
+    iphoneStorage: "På iPhone kan Safari rensa sparade data för webbplatser som du inte har använt på ett tag. Lägg till Plugga på hemskärmen och öppna den därifrån, så är dina framsteg säkrare. Spara ändå en kopia då och då.",
+  },
+
+  print: {
+    button: "Skriv ut",
+    keyPoints: "Skriv ut viktigast",
+    keyPointsTitle: (label: string) => `Viktigast · ${label}`,
+  },
+
   storage: {
     unavailable: "Dina framsteg sparas inte i den här webbläsaren",
   },

@@ -7,7 +7,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { TODAY } from "./helpers.ts";
 import { course as fixture } from "./fixtures/course.ts";
 
-const PHASE = process.env.PLUGGA_PHASE || "fas2";
+const PHASE = process.env.PLUGGA_PHASE || "fas4";
 const SIZES = [
   { name: "375", width: 375, height: 812 },
   { name: "820", width: 820, height: 1180 },
@@ -118,6 +118,29 @@ for (const size of SIZES) {
         await page.getByRole("button", { name: "Öppna menyn" }).click();
         await s("18-meny", false);
       }
+
+      // Phase 4: Dela, the backup card and the backup section.
+      await go(page, "#/d1/quiz");
+      await page.locator("[data-share-button]").click();
+      await expect(page.locator("dialog[data-share]")).toBeVisible();
+      await s("19-dela", false);
+      await page.keyboard.press("Escape");
+      await page.evaluate(() => {
+        const key = "plugga:bio2-vaxtfys-cellbio-ht26";
+        const p = JSON.parse(localStorage.getItem(key) || "{}");
+        p.lastBackupAt = null;
+        p.settings = { ...(p.settings || {}), introDismissed: true, backupSnoozedUntil: null };
+        localStorage.setItem(key, JSON.stringify(p));
+      });
+      await go(page, "#/");
+      await page.reload();
+      await expect(page.locator("[data-backup-card]")).toBeVisible();
+      await s("20-oversikt-kopiekort");
+      await go(page, "#/framsteg");
+      await page.locator("[data-copy-code]").click();
+      await expect(page.locator("#backup-code")).toHaveValue(/^PLUGGA/);
+      await page.locator("[data-backup]").scrollIntoViewIfNeeded();
+      await s("21-framsteg-kopia");
     });
   }
 }

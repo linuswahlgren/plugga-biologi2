@@ -15,6 +15,8 @@ export interface Course {
   title: string;
   area: string;
   teacher?: string;
+  /** The published address, used for sharing links from the backup file. Never change it once shared. Additive field. */
+  url?: string;
   accent: Accent;
   currentExam: string;
   /** Newest first. */

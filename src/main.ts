@@ -31,6 +31,8 @@ import { progressView } from "./views/progress.ts";
 import { notFoundView } from "./views/simple.ts";
 import { sessionPageView } from "./views/sessionPage.ts";
 import { DIAGRAM_IDS, DIAGRAM_MARKERS } from "./diagrams/index.ts";
+import { registerServiceWorker, requestPersistence, shareUrl, startUpdateCheck } from "./pwa.ts";
+import { openShareDialog } from "./components/ShareDialog.ts";
 
 const course = loadCourse(rawCourse);
 const kv = createStorage();
@@ -95,6 +97,7 @@ const topbar = createTopBar({
     topbar.menuButton.setAttribute("aria-label", sv.nav.menuClose);
     sidebar.el.querySelector<HTMLElement>("a")?.focus();
   },
+  onShare: () => openShareDialog(shareUrl(app), app.toast),
   onTheme: () => {
     const current = effectiveTheme(store.get().settings.theme);
     store.update((p) => { p.settings.theme = current === "dark" ? "light" : "dark"; }, { activity: false });
@@ -149,6 +152,7 @@ function viewFor(route: Route): ViewResult {
 }
 
 function render(): void {
+  delete document.documentElement.dataset.print;
   const route = parseHash(location.hash, known());
   current?.dispose?.();
   closeDrawers();
@@ -168,6 +172,11 @@ function render(): void {
 
 window.addEventListener("hashchange", render);
 render();
+
+// ---------- Installable app, updates, storage ----------
+registerServiceWorker();
+startUpdateCheck(app);
+requestPersistence(app);
 
 // ---------- Keyboard ----------
 document.addEventListener("keydown", (e) => {

@@ -19,6 +19,8 @@ export const course: Course = {
   title: "Biologi 2",
   area: "Växtfysiologi och cellbiologi",
   teacher: TEACHER || undefined,
+  // The permanent address. Progress is stored per address: never change it.
+  url: "https://linuswahlgren.github.io/plugga-biologi2/",
   accent: "green",
   currentExam: "prov2",
   exams: [prov2, prov1],

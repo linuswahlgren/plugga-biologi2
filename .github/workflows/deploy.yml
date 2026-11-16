@@ -1,0 +1,50 @@
+# Publishes Plugga to GitHub Pages: https://linuswahlgren.github.io/plugga-biologi2/
+# Runs on every push to main (and by hand from the Actions tab). The address never changes,
+# so students keep their progress. One-time setup in the repository:
+#   Settings › Pages › Build and deployment › Source: GitHub Actions
+name: Publicera Plugga
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # Content check, typecheck and both builds (dist/site and the backup file).
+      - run: npm run build
+      # Unit specs only (no browsers needed): answer matching, sessions, backup, content check.
+      - run: node scripts/run.mjs playwright test --project=node
+        env:
+          PLUGGA_UNIT_ONLY: "1"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

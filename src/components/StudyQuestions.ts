@@ -11,6 +11,7 @@ import type { Exam, StudyQuestion } from "../types.ts";
 import { to } from "../router.ts";
 import { progressMeter } from "./ProgressMeter.ts";
 import { levelTag } from "./Tag.ts";
+import { printView } from "../print.ts";
 
 function refLink(app: App, ref: string): HTMLElement | null {
   const c = app.course;
@@ -108,7 +109,9 @@ export function studyQuestions(app: App, exam: Exam): HTMLElement {
   return h(
     "div",
     { class: "sk-stack sk-stack--4", "data-study-list": exam.id },
-    h("section", { class: "sk-card sk-stack" }, summary, meter.el, h("p", { class: "sk-muted" }, sv.study.intro)),
+    h("section", { class: "sk-card sk-stack" }, summary, meter.el, h("p", { class: "sk-muted" }, sv.study.intro),
+      h("div", { class: "sk-btnrow" }, h("button", { class: "sk-btn", type: "button", "data-print-button": "fragor", onclick: () => printView("fragor") }, icon("print", 18), sv.print.button)),
+    ),
     h("ol", { class: "sk-plainlist sk-stack" }, qs.map(item)),
   );
 }

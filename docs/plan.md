@@ -61,6 +61,14 @@ The extractor exports slide pictures to `material/_extracted/prov1/media/`. Thes
 - **Quiz options** were rewritten so the right answer is not the obviously longest option (BUILD §8.6).
 - **Without the summary deck:** `Biologi nivå 2.pptx` was not on Linus2026, so Phase 3 used only the lesson decks and the course document.
 
+## Phase 4 notes
+
+- **Hosted site** (`dist/site`): index.html, `manifest.webmanifest` (generated from the course in vite.config.ts), `sw.js` (network first, cache fallback), `icons/` (rendered by `scripts/make-icons.mjs`), `version.json` (build time, for the update toast). The backup file has none of these and still makes no requests.
+- **Deploy:** `.github/workflows/deploy.yml` builds, runs the unit specs and publishes `dist/site` to GitHub Pages on every push to main. Needs a one-time setting in the repository (Pages › Source: GitHub Actions).
+- **QR codes:** uqr 0.1.3 (MIT, Project Nayuki and Anthony Fu), bundled; its notice is kept as an HTML comment in every build. jsQR (Apache-2.0) is a dev dependency used only to check in a unit test that the codes decode.
+- **iPhone storage:** WebKit may evict data for sites that have not been used for a while; persistent storage is granted mainly to home-screen web apps (WebKit blog, "Updates to Storage Policy"). Mina framsteg words the tip that way and asks for `navigator.storage.persist()` after the first real progress.
+- **Progress schema:** additive field `settings.backupSnoozedUntil` ("Inte nu" on the backup card); `Course.url` holds the published address.
+
 ## Phase status
 
 | Phase | Status |
@@ -69,5 +77,5 @@ The extractor exports slide pictures to `material/_extracted/prov1/media/`. Thes
 | 1 · Foundation | Done (commit `0beed4e`); checkpoint shown with screenshots in `review/fas1/` |
 | 2 · Learning features | Done 2026-11-16 (on Linus2026); screenshots of the test course in `review/fas2/` |
 | 3 · Content | Done 2026-11-16; waiting for the user's review at the checkpoint |
-| 4 · Sharing and keeping progress | |
+| 4 · Sharing and keeping progress | Done 2026-11-16 (no checkpoint) |
 | 5 · Quality and handover | |

@@ -4,8 +4,8 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
 
 ## Status (2026-11-16)
 
-- **Phases 0–3 are done.** Phase 3 (content) waits at its ⏸ checkpoint for the user's review. The approved plan, the decisions and the findings from the slide images are in `docs/plan.md`. **Read it before continuing.**
-- **Next is Phase 4 (sharing and keeping progress, BUILD.md §11)** once the user approves Phase 3. Phase 4 has no checkpoint, so go on to Phase 5 and stop at its ⏸.
+- **Phases 0–4 are done.** The user approved Phase 3 by starting Phase 4. The approved plan, the decisions and the findings from the slide images are in `docs/plan.md`. **Read it before continuing.**
+- **Next is Phase 5 (quality and handover, BUILD.md §11)** and its ⏸ checkpoint: README.md, the skills `/ny-del` and `/publicera`, the review subagent, final screenshots. Publishing needs the user: they sign in to GitHub, create the repository `linuswahlgren/plugga-biologi2`, and set Settings › Pages › Source to GitHub Actions. Never push without asking.
 - **The learning features are tested on a test course,** not on real content: `tests/fixtures/course.ts` keeps the real course and Del 1's lessons and swaps in a fixed set of items, plus a Prov 2 part. `vite build --mode e2e` builds it to `dist/e2e`, served on :4174 for `tests/learning.e2e.ts` and `npm run shots`. It is never shipped. Real items use plain ids (`d1-k01`); the fixture uses `x` ids (`d1-xk01`) so they never collide.
 - **Decided 2026-11-16:** the flower labels on Del 3 bild 5 (kronblad, foderblad, knapp, stift, sträng) come from the material. Cite that slide; they are **not** tagged "Kompletterande".
 - **On Linus2026** the six lesson files were copied from Downloads to `material/prov1/`. The summary deck `Biologi nivå 2.pptx` is not there (optional: facts come from the lesson decks, and `docs/plan.md` records what the summary deck adds). Python 3.13 is installed in `%LOCALAPPDATA%\Programs\Python\Python313` (open a new shell if `python` is not found); `material/_extracted/prov1/` was made with it on 2026-11-16.
@@ -37,6 +37,7 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
 | `npm test` | Build (site, backup, test course), then Playwright: unit specs + Chromium, Firefox, WebKit |
 | `npm run shots` | Screenshots of the test course build to `review/<fas>/` (set `PLUGGA_PHASE`, default `fas2`) |
 | `npm run extract` | `material/prov1` → `material/_extracted/prov1` (Markdown + `media/`) |
+| `node scripts/make-icons.mjs` | Renders the app icons in `public/icons/` from the logo (only when the logo changes) |
 
 ## Folder map
 
@@ -46,7 +47,8 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
   - `check.ts` is the content check. `answer.ts` does answer matching. `mastery.ts` and `recommend.ts` hold the progress rules.
   - `session.ts` holds the session rules (settings in the URL, pools, sampling and interleaving, Mina missar, best score, saved sessions). `srs.ts` holds the Leitner boxes. Both are pure and unit-tested.
   - `views/sessionHost.ts` and `views/host.ts` host card and quiz sessions on part tabs, `#/omgang/…` and the hub's Provsimulering. A running session lives in `Progress.session`; its route is the host path + `?fortsatt=1`. `views/quizRun.ts`, `views/cardRun.ts` and `views/practice.ts` run them.
-  - `store/` holds storage, progress v2 and the migration. `components/` has one file per component. `views/` holds the pages. `styles/` holds the CSS. `diagrams/` holds the label diagrams.
+  - `pwa.ts` registers the service worker (`public/sw.js`), checks `version.json` for updates, asks for persistent storage and builds the share link. `print.ts` sets the print views.
+  - `store/` holds storage, progress v2, the migration and `backup.ts` (save, load, merge, text code). `components/` has one file per component. `views/` holds the pages. `styles/` holds the CSS. `diagrams/` holds the label diagrams.
 - `scripts/`:
   - `extract_material.py` uses only the Python stdlib.
   - `check-content.ts` runs directly with Node 24+.

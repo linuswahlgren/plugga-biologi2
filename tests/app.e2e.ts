@@ -189,6 +189,11 @@ test.describe("backup file", () => {
     await expect(page.locator("main h1")).toHaveText("Växtfysiologi och cellbiologi");
     await page.locator(".sk-sidebar a[data-nav=d1]").click();
     await expect(page.locator("main h1")).toHaveText("Växtcellen och transport över membran");
+    await page.locator(".sk-sidebar a[data-nav=progress]").click();
+    await expect(page.locator("[data-backup-file-note]")).toContainText("Det här är reservfilen.");
+    await expect(page.locator("[data-install]")).toHaveCount(0);
+    await page.locator("[data-share-button]").click();
+    await expect(page.locator("#share-url")).toHaveValue("https://linuswahlgren.github.io/plugga-biologi2/#/framsteg");
     g.done();
   });
 });

@@ -31,6 +31,7 @@ export interface NCourse {
   area: string;
   subject: string;
   teacher?: string;
+  url?: string;
   accent: Course["accent"];
   exams: Exam[];
   currentExam: Exam | undefined;
@@ -137,6 +138,7 @@ export function loadCourse(course: Course): NCourse {
     area: course.area,
     subject: course.subject,
     teacher: course.teacher || undefined,
+    url: course.url || undefined,
     accent: course.accent,
     exams: course.exams,
     currentExam: examById.get(course.currentExam),
