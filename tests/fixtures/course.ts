@@ -124,8 +124,16 @@ const fixtureProv1: Exam = {
   ],
 };
 
+// A fixed glossary, so the tests do not change when the real one grows.
 const glossary: Term[] = [
-  ...(real.glossary ?? []).filter((t) => t.week === "d1"),
+  { id: "t-vakuol", term: "Vakuol", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Stor vattenfylld blåsa i växtcellen. När den fylls trycker den mot cellväggen." },
+  { id: "t-cellvagg", term: "Cellvägg", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Vägg utanför cellmembranet av cellulosa och hemicellulosa som ger växtcellen stadga." },
+  { id: "t-cellulosa", term: "Cellulosa", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Ämnet som alla växtcellers cellväggar är byggda av." },
+  { id: "t-lignin", term: "Lignin", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Ämne som kan lagras in i cellväggen och gör den hård och vedartad." },
+  { id: "t-plasmodesmer", term: "Plasmodesmer", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Små kanaler genom cellväggen som förbinder grannceller med varandra." },
+  { id: "t-plastider", term: "Plastider", theme: "Växtceller", week: "d1", lesson: "d1-l1", supplement: true, definition: "Organeller med dubbelt membran i växtceller, till exempel kloroplaster, leukoplaster, amyloplaster och kromoplaster." },
+  { id: "t-semipermeabel", term: "Semipermeabel", theme: "Växtceller", week: "d1", lesson: "d1-l2", extra: true, definition: "Halvgenomsläpplig. Släpper igenom vissa ämnen lättare än andra." },
+  { id: "t-fosfolipid", term: "Fosfolipid", theme: "Växtceller", week: "d1", lesson: "d1-l2", extra: true, definition: "Fettmolekyl med ett hydrofilt huvud och två hydrofoba svansar. Byggsten i cellmembranet." },
   { id: "t-granum-x", term: "Granum", theme: "Fotosyntes", week: "d2", lesson: "d2-l1", definition: "En stapel av tylakoider i kloroplasten." },
 ];
 

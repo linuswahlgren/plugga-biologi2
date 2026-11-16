@@ -4,11 +4,11 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
 
 ## Status (2026-11-16)
 
-- **Phases 0, 1 and 2 are done.** The approved plan, the decisions and the findings from the slide images are in `docs/plan.md`. **Read it before continuing.**
-- **Next is Phase 3 (content, BUILD.md §11):** all six Prov 1 parts, the hub, the glossary, the fact-check subagent, then stop at its ⏸. It needs the material (below).
+- **Phases 0–3 are done.** Phase 3 (content) waits at its ⏸ checkpoint for the user's review. The approved plan, the decisions and the findings from the slide images are in `docs/plan.md`. **Read it before continuing.**
+- **Next is Phase 4 (sharing and keeping progress, BUILD.md §11)** once the user approves Phase 3. Phase 4 has no checkpoint, so go on to Phase 5 and stop at its ⏸.
 - **The learning features are tested on a test course,** not on real content: `tests/fixtures/course.ts` keeps the real course and Del 1's lessons and swaps in a fixed set of items, plus a Prov 2 part. `vite build --mode e2e` builds it to `dist/e2e`, served on :4174 for `tests/learning.e2e.ts` and `npm run shots`. It is never shipped. Real items use plain ids (`d1-k01`); the fixture uses `x` ids (`d1-xk01`) so they never collide.
 - **Decided 2026-11-16:** the flower labels on Del 3 bild 5 (kronblad, foderblad, knapp, stift, sträng) come from the material. Cite that slide; they are **not** tagged "Kompletterande".
-- **On Linus2026** the six lesson files were copied from Downloads to `material/prov1/`. The summary deck `Biologi nivå 2.pptx` is not there (optional: facts come from the lesson decks, and `docs/plan.md` records what the summary deck adds). Python is not installed, so `material/_extracted/prov1/` must be made with `npm run extract` after installing Python, or copied from the school PC.
+- **On Linus2026** the six lesson files were copied from Downloads to `material/prov1/`. The summary deck `Biologi nivå 2.pptx` is not there (optional: facts come from the lesson decks, and `docs/plan.md` records what the summary deck adds). Python 3.13 is installed in `%LOCALAPPDATA%\Programs\Python\Python313` (open a new shell if `python` is not found); `material/_extracted/prov1/` was made with it on 2026-11-16.
 - **On a new computer,** check that `material/prov1/` and `material/_extracted/prov1/` exist; they are never in Git. If they're missing, ask the user to copy them before any content work. `npm run extract` rebuilds `_extracted` from `material/prov1`.
 
 ## Never change

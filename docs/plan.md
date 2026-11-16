@@ -52,6 +52,15 @@ The extractor exports slide pictures to `material/_extracted/prov1/media/`. Thes
 - **Best score per part:** a session counts for a part when it had at least 10 of that part's questions, or all of them (BUILD §4.6, read per part so mixed sessions work).
 - **Glossary terms as cards:** a term without its own `card` is practised as a card with the term's id, so "Öva som kort" and "Kort att repetera idag" include it.
 
+## Phase 3 notes
+
+- **Counts:** 6 parts, 30 lessons, 138 cards, 112 quiz questions, 48 practice items, 43 key points, 17 study questions with model answers, 123 glossary terms (all 118 concept-list terms plus 13 extra lesson terms, some on the list under a combined name).
+- **Fact-check:** three separate subagents compared Del 1–2, Del 3–4 and Del 5–6 with the hub and glossary against `material/_extracted/prov1/`. Every finding was fixed. Most important: the phloem is the bark's innermost living layer (Del 2 bild 3), "kläder" is a basic need (hållbar bild 3), fungal cells are n + n after fusion (Del 3 bild 26), and the pollination definition cites hållbar bild 18.
+- **Verified on the web (2026-11-16):** Planetary Health Check 2026 (Potsdam Institute for Climate Impact Research, 21 Sep 2026): seven of nine planetary boundaries transgressed. The slide (hållbar bild 24) shows an older assessment with six of nine; Plugga says so. Anthropocene: rejected as a formal epoch by the IUGS in March 2024.
+- **Extra correction row** on "Om materialet": seed ploidy (Del 3 bild 7 text says the seed is 2n; the slide's image shows embryo 2n, endosperm 3n, seed coat 2n).
+- **Quiz options** were rewritten so the right answer is not the obviously longest option (BUILD §8.6).
+- **Without the summary deck:** `Biologi nivå 2.pptx` was not on Linus2026, so Phase 3 used only the lesson decks and the course document.
+
 ## Phase status
 
 | Phase | Status |
@@ -59,6 +68,6 @@ The extractor exports slide pictures to `material/_extracted/prov1/media/`. Thes
 | 0 · Read and plan | Done, approved 2026-11-16 |
 | 1 · Foundation | Done (commit `0beed4e`); checkpoint shown with screenshots in `review/fas1/` |
 | 2 · Learning features | Done 2026-11-16 (on Linus2026); screenshots of the test course in `review/fas2/` |
-| 3 · Content | Next. On Linus2026 the six lesson files are in `material/prov1/`; `_extracted/` still has to be made (`npm run extract`, needs Python) |
+| 3 · Content | Done 2026-11-16; waiting for the user's review at the checkpoint |
 | 4 · Sharing and keeping progress | |
 | 5 · Quality and handover | |

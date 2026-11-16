@@ -57,7 +57,7 @@ test.describe("part page", () => {
     await first.getByRole("button", { name: "Markera som klar" }).click();
     await expect(first.getByRole("button", { name: "Markera som inte klar" })).toBeVisible();
     await expect(page.locator("main .sk-pagehead")).toContainText("Pågår");
-    await expect(page.locator(".sk-sidebar a[data-nav=d1] [role=progressbar]")).toHaveAttribute("aria-valuenow", "50");
+    await expect(page.locator(".sk-sidebar a[data-nav=d1] [role=progressbar]")).toHaveAttribute("aria-valuenow", "4"); // 1 of 5 lessons = 20 % of the lesson weight (20)
     await page.waitForTimeout(400); // debounced save (300 ms)
     await page.reload();
     await expect(page.locator("[data-lesson=d1-l1] .sk-numcircle--done")).toBeVisible();
@@ -114,7 +114,7 @@ test.describe("exam hubs", () => {
     await expect(page.locator(".sk-readinglist li")).toHaveText(["s. 47–51", "s. 150–154", "s. 155–156", "s. 159–163", "s. 165–167", "s. 171–177", "s. 178–180", "s. 183–190", "Kapitel 11, s. 215–245"]);
     await page.getByRole("link", { name: "Om materialet" }).click();
     await expect(page).toHaveTitle("Om materialet – Repetera prov 1 – Biologi 2 | Plugga");
-    await expect(page.locator(".sk-table tbody tr")).toHaveCount(5);
+    await expect(page.locator(".sk-table tbody tr")).toHaveCount(6);
     await expect(page.locator(".sk-table")).toContainText("PEP-karboxylas");
   });
 });

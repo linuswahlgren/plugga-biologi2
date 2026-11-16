@@ -1,17 +1,152 @@
 /**
- * Prov 1 glossary: every term from the course document's concept list, grouped by its theme,
- * plus a few terms the lessons need that are not on the list (extra: true).
- * Phase 1 holds the terms taught by Del 1's first two lessons; the rest arrive in Phase 3.
+ * Prov 1 glossary: every term from the course document's concept list ("Begrepp, läsanvisningar
+ * och frågor inför prov 2026"), grouped by its theme, plus the lesson terms the list lacks
+ * (extra: true, shown as "Utöver begreppslistan"). Definitions the slides don't support are
+ * supplement: true. A term with `card` is practised with that card ("Öva som kort").
  */
 import type { Term } from "../../../src/types.ts";
 
+const C = "Växtceller";
+const V = "Växtens vävnader, organ och organsystem";
+const F = "Fotosyntes";
+const L = "Växternas livscykel";
+const S = "Svampar";
+const H = "Hållbar utveckling";
+
 export const glossary: Term[] = [
-  { id: "t-vakuol", term: "Vakuol", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Stor vattenfylld blåsa i växtcellen. När den fylls trycker den mot cellväggen." },
-  { id: "t-cellvagg", term: "Cellvägg", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Vägg utanför cellmembranet av cellulosa och hemicellulosa som ger växtcellen stadga." },
-  { id: "t-cellulosa", term: "Cellulosa", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Ämnet som alla växtcellers cellväggar är byggda av." },
-  { id: "t-lignin", term: "Lignin", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Ämne som kan lagras in i cellväggen och gör den hård och vedartad." },
-  { id: "t-plasmodesmer", term: "Plasmodesmer", theme: "Växtceller", week: "d1", lesson: "d1-l1", definition: "Små kanaler genom cellväggen som förbinder grannceller med varandra." },
-  { id: "t-plastider", term: "Plastider", theme: "Växtceller", week: "d1", lesson: "d1-l1", supplement: true, definition: "Organeller med dubbelt membran i växtceller, till exempel kloroplaster, leukoplaster, amyloplaster och kromoplaster." },
-  { id: "t-semipermeabel", term: "Semipermeabel", theme: "Växtceller", week: "d1", lesson: "d1-l2", extra: true, definition: "Halvgenomsläpplig. Släpper igenom vissa ämnen lättare än andra." },
-  { id: "t-fosfolipid", term: "Fosfolipid", theme: "Växtceller", week: "d1", lesson: "d1-l2", extra: true, definition: "Fettmolekyl med ett hydrofilt huvud och två hydrofoba svansar. Byggsten i cellmembranet." },
+  // ---------- Växtceller ----------
+  { id: "t-vakuol", term: "Vakuol", theme: C, week: "d1", lesson: "d1-l1", card: "d1-k06", definition: "Stor vattenfylld blåsa i växtcellen. När den fylls trycker den mot cellväggen och ger turgortryck." },
+  { id: "t-plastider", term: "Plastider", theme: C, week: "d1", lesson: "d1-l1", card: "d1-k07", supplement: true, definition: "Organeller i växtceller som omges av två membran, till exempel kloroplaster, leukoplaster och kromoplaster." },
+  { id: "t-kloroplast", term: "Kloroplast", theme: C, week: "d1", lesson: "d1-l1", definition: "Plastid där fotosyntesen sker. Har dubbelt membran och innehåller klorofyll." },
+  { id: "t-leukoplaster", term: "Leukoplaster", theme: C, week: "d1", lesson: "d1-l1", supplement: true, definition: "Färglösa plastider som lagrar näring." },
+  { id: "t-amyloplaster", term: "Amyloplaster", theme: C, week: "d1", lesson: "d1-l1", supplement: true, definition: "Leukoplaster som lagrar stärkelse." },
+  { id: "t-kromoplaster", term: "Kromoplaster", theme: C, week: "d1", lesson: "d1-l1", supplement: true, definition: "Plastider som ger färg åt blommor och frukter." },
+  { id: "t-proplastider", term: "Proplastider", theme: C, week: "d1", lesson: "d1-l1", supplement: true, definition: "Små plastider i växtens delningsvävnad som de andra plastiderna utvecklas ur." },
+  { id: "t-lumen", term: "Lumen", theme: C, week: "d3", lesson: "d3-l1", card: "d3-k04", definition: "Insidan av en tylakoid. Hit förs vätejoner i ljusreaktionerna." },
+  { id: "t-stroma", term: "Stroma", theme: C, week: "d3", lesson: "d3-l1", card: "d3-k05", definition: "Vätskan runt tylakoiderna i kloroplasten. Här sker Calvincykeln." },
+  { id: "t-tylakoider", term: "Tylakoider", theme: C, week: "d3", lesson: "d3-l1", card: "d3-k02", definition: "Platta membranblåsor i kloroplasten där ljusreaktionerna sker. En stapel tylakoider kallas granum." },
+  { id: "t-cellvagg", term: "Cellvägg", theme: C, week: "d1", lesson: "d1-l1", card: "d1-k03", definition: "Vägg utanför cellmembranet av cellulosa och hemicellulosa som ger växtcellen stadga." },
+  { id: "t-cellulosa", term: "Cellulosa", theme: C, week: "d1", lesson: "d1-l1", definition: "Ämnet som alla växtcellers cellväggar innehåller." },
+  { id: "t-lignin", term: "Lignin", theme: C, week: "d1", lesson: "d1-l1", card: "d1-k04", definition: "Vedämne som kan lagras in i cellväggen och gör den hård och vedartad." },
+  { id: "t-plasmodesmer", term: "Plasmodesmer", theme: C, week: "d1", lesson: "d1-l1", card: "d1-k05", definition: "Små kanaler genom cellväggen som förbinder grannceller. Cellerna kommunicerar genom dem." },
+  { id: "t-klyvoppning", term: "Klyvöppning (stomata)", theme: C, week: "d2", lesson: "d2-l4", card: "d2-k17", definition: "Liten öppning i bladet som tar in koldioxid och släpper ut vatten." },
+  { id: "t-slutceller", term: "Slutceller", theme: C, week: "d2", lesson: "d2-l4", supplement: true, definition: "De två cellerna runt en klyvöppning. De öppnar och stänger den." },
+  // Lesson terms not on the concept list
+  { id: "t-semipermeabel", term: "Semipermeabel", theme: C, week: "d1", lesson: "d1-l2", card: "d1-k08", extra: true, definition: "Halvgenomsläpplig. Släpper igenom vissa ämnen lättare än andra." },
+  { id: "t-fosfolipid", term: "Fosfolipid", theme: C, week: "d1", lesson: "d1-l2", card: "d1-k09", extra: true, definition: "Lipid (fettliknande molekyl) med ett hydrofilt huvud och två hydrofoba svansar. Byggsten i cellmembranet." },
+  { id: "t-diffusion", term: "Diffusion", theme: C, week: "d1", lesson: "d1-l3", card: "d1-k12", extra: true, definition: "Passiv transport där ämnen rör sig från hög till låg koncentration." },
+  { id: "t-koncentrationsgradient", term: "Koncentrationsgradient", theme: C, week: "d1", lesson: "d1-l3", card: "d1-k13", extra: true, definition: "Skillnaden i ett ämnes koncentration mellan ett membrans två sidor." },
+  { id: "t-osmos", term: "Osmos", theme: C, week: "d1", lesson: "d1-l4", card: "d1-k16", extra: true, definition: "Vattnets diffusion genom ett semipermeabelt membran." },
+  { id: "t-aquaporin", term: "Aquaporin", theme: C, week: "d1", lesson: "d1-l4", card: "d1-k15", extra: true, definition: "Kanalprotein i cellmembranet som släpper igenom vatten." },
+  { id: "t-hypoton", term: "Hypoton", theme: C, week: "d1", lesson: "d1-l5", extra: true, definition: "En lösning med lägre saltkoncentration än cellen, till exempel destillerat vatten. Vatten strömmar in." },
+  { id: "t-isoton", term: "Isoton", theme: C, week: "d1", lesson: "d1-l5", extra: true, definition: "En lösning med samma saltkoncentration som cellen, till exempel 0,9 % NaCl." },
+  { id: "t-hyperton", term: "Hyperton", theme: C, week: "d1", lesson: "d1-l5", extra: true, definition: "En lösning med högre saltkoncentration än cellen, till exempel 3 % NaCl. Vatten strömmar ut." },
+  { id: "t-turgor", term: "Turgor (turgortryck)", theme: C, week: "d1", lesson: "d1-l5", card: "d1-k19", extra: true, definition: "Trycket när vakuolen fylls med vatten och spänner ut cellväggen. Ger växten stabilitet." },
+  { id: "t-plasmolys", term: "Plasmolys", theme: C, week: "d1", lesson: "d1-l5", card: "d1-k20", extra: true, definition: "När växtcellen förlorar vatten i en hyperton lösning och cellmembranet släpper från cellväggen." },
+
+  // ---------- Växtens vävnader, organ och organsystem ----------
+  { id: "t-skottsystem", term: "Skottsystem", theme: V, week: "d2", lesson: "d2-l1", supplement: true, definition: "Växtens delar ovan jord: stam och blad." },
+  { id: "t-rotsystem", term: "Rotsystem", theme: V, week: "d2", lesson: "d2-l1", supplement: true, definition: "Alla växtens rötter tillsammans." },
+  { id: "t-blad", term: "Blad", theme: V, week: "d2", lesson: "d2-l1", definition: "Organ där fotosyntesen sker. Har epidermis, grundvävnad, ledningsvävnad och klyvöppningar." },
+  { id: "t-rot", term: "Rot", theme: V, week: "d2", lesson: "d2-l3", definition: "Organ som tar upp vatten och joner ur jorden. Jonerna tas upp med aktiv transport." },
+  { id: "t-stam", term: "Stam (strå)", theme: V, week: "d2", lesson: "d2-l1", definition: "Organ som bär bladen och leder vatten och socker mellan rot och blad." },
+  { id: "t-epidermis", term: "Epidermis", theme: V, week: "d2", lesson: "d2-l1", card: "d2-k03", definition: "Växtens hud, det yttersta cellagret." },
+  { id: "t-grundvavnad", term: "Grundvävnad", theme: V, week: "d2", lesson: "d2-l1", card: "d2-k04", definition: "Mjuk eller hård vävnad som kan sköta fotosyntes, lagra det som bildas och ge stöd." },
+  { id: "t-mesofyllceller", term: "Mesofyllceller", theme: V, week: "d2", lesson: "d2-l1", supplement: true, definition: "Cellerna i bladets grundvävnad. Hos C4-växter tar de yttre mesofyllcellerna upp koldioxid." },
+  { id: "t-palissadvavnad", term: "Palissadvävnad", theme: V, week: "d2", lesson: "d2-l1", supplement: true, definition: "Tätt packade, avlånga celler överst i bladets grundvävnad." },
+  { id: "t-svampvavnad", term: "Svampvävnad", theme: V, week: "d2", lesson: "d2-l1", supplement: true, definition: "Luftig vävnad under palissadvävnaden i bladet." },
+  { id: "t-ledningsvavnad", term: "Ledningsvävnad", theme: V, week: "d2", lesson: "d2-l1", card: "d2-k05", definition: "Xylem och floem, som transporterar ämnen genom hela växten." },
+  { id: "t-xylem", term: "Xylem", theme: V, week: "d2", lesson: "d2-l3", card: "d2-k12", definition: "Veddelen: döda celler, trakeider och kärl, som transporterar vatten och oorganiska ämnen." },
+  { id: "t-floem", term: "Floem", theme: V, week: "d2", lesson: "d2-l5", card: "d2-k21", definition: "Sildelen: levande celler, silceller och följeceller, som transporterar socker och organiska ämnen." },
+  { id: "t-meristem", term: "Meristem (delningsvävnad)", theme: V, week: "d2", lesson: "d2-l2", card: "d2-k08", definition: "Vävnad där cellerna delar sig, så att växten kan växa på längden och bredden." },
+  { id: "t-totipotenta", term: "Totipotenta celler", theme: V, week: "d2", lesson: "d2-l1", card: "d2-k01", supplement: true, definition: "Celler som kan utvecklas till alla typer av celler i organismen. Växternas celler är totipotenta." },
+  { id: "t-odifferentierade", term: "Odifferentierade celler", theme: V, week: "d2", lesson: "d2-l1", supplement: true, definition: "Celler som ännu inte fått någon specifik uppgift. Bakom meristemet differentieras de." },
+  { id: "t-kambium", term: "Kambium", theme: V, week: "d2", lesson: "d2-l2", card: "d2-k10", definition: "Meristem mellan ved och bark i stammen. Bildar nytt xylem och ger årsringar." },
+  { id: "t-trakeider", term: "Trakeider", theme: V, week: "d2", lesson: "d2-l3", definition: "Smala, döda rörceller i xylemet. Barrträd har bara trakeider." },
+  { id: "t-karl", term: "Kärl", theme: V, week: "d2", lesson: "d2-l3", definition: "Stora, rymliga döda rörceller i xylemet." },
+  { id: "t-transpiration", term: "Transpiration", theme: V, week: "d2", lesson: "d2-l4", card: "d2-k18", definition: "Avdunstning av vatten från bladens klyvöppningar. Den suger upp vatten genom växten." },
+  { id: "t-rottryck", term: "Rottryck", theme: V, week: "d2", lesson: "d2-l3", card: "d2-k14", definition: "Rötterna tar upp joner med aktiv transport, och vatten följer efter med osmos och pressas uppåt." },
+  { id: "t-silceller", term: "Silceller", theme: V, week: "d2", lesson: "d2-l5", definition: "Levande celler i floemet som leder sockret. De saknar cellkärna." },
+  { id: "t-foljeceller", term: "Följeceller", theme: V, week: "d2", lesson: "d2-l5", definition: "Celler i floemet med cellkärna. Socker förs från dem in i silcellerna med aktiv transport." },
+  { id: "t-tryckstromsteorin", term: "Tryckströmsteorin", theme: V, week: "d2", lesson: "d2-l5", card: "d2-k23", definition: "Socker pumpas in i silcellerna, vatten följer med osmos och trycket driver sockervätskan framåt i floemet." },
+
+  // ---------- Fotosyntes ----------
+  { id: "t-ljusreaktionen", term: "Ljusreaktionen (fotokemiska reaktioner)", theme: F, week: "d3", lesson: "d3-l1", definition: "Fotosyntesens första steg i tylakoiderna. Vatten spjälkas, och ATP och NADPH bildas." },
+  { id: "t-fotosystem-2", term: "Fotosystem II", theme: F, week: "d3", lesson: "d3-l2", card: "d3-k10", definition: "Tar upp ljus vid 680 nm, spjälkar vatten till syrgas och skickar elektroner vidare." },
+  { id: "t-elektrontransportkedjan", term: "Elektrontransportkedjan", theme: F, week: "d3", lesson: "d3-l2", card: "d3-k12", definition: "För elektroner från fotosystem II till fotosystem I och för in vätejoner i lumen." },
+  { id: "t-fotosystem-1", term: "Fotosystem I", theme: F, week: "d3", lesson: "d3-l2", card: "d3-k11", definition: "Tar upp ljus vid 700 nm och använder elektronerna för att bilda NADPH." },
+  { id: "t-calvincykeln", term: "Mörkerreaktionen (Calvincykeln)", theme: F, week: "d3", lesson: "d3-l4", card: "d3-k17", definition: "Fotosyntesens andra steg i stroma. Bygger socker av koldioxid med ATP och NADPH." },
+  { id: "t-koldioxidfixering", term: "Koldioxidfixering", theme: F, week: "d3", lesson: "d3-l4", card: "d3-k18", definition: "När koldioxid binds in i en organisk molekyl, i Calvincykeln." },
+  { id: "t-rubisco", term: "Rubisco", theme: F, week: "d3", lesson: "d3-l4", card: "d3-k16", definition: "Enzymet som binder koldioxid till ett socker med 5 kolatomer i Calvincykeln." },
+  { id: "t-cellandning", term: "Cellandning", theme: F, week: "d3", lesson: "d3-l4", card: "d3-k20", supplement: true, definition: "Socker bryts ner med syre till koldioxid och vatten i mitokondrierna, och energin lagras i ATP." },
+  { id: "t-atp", term: "ATP", theme: F, week: "d3", lesson: "d3-l3", definition: "Energirik molekyl som bildas i ljusreaktionerna och behövs för att omvandla koldioxid till socker." },
+  { id: "t-nadph", term: "Vätebärare (NADPH)", theme: F, week: "d3", lesson: "d3-l2", card: "d3-k14", definition: "Bildas med hjälp av fotosystem I och lämnar väte till Calvincykeln." },
+  { id: "t-c3", term: "C3-växter", theme: F, week: "d3", lesson: "d3-l5", card: "d3-k21", definition: "De vanliga växterna. Använder bara Calvincykeln, behöver mycket koldioxid och klarar inte hög värme." },
+  { id: "t-c4", term: "C4-växter", theme: F, week: "d3", lesson: "d3-l5", card: "d3-k22", definition: "Binder koldioxid i en 4-kolsmolekyl i mesofyllcellerna. I inre celler tas koldioxiden loss och förs in i Calvincykeln." },
+  { id: "t-pep-karboxylas", term: "PEP-karboxylas", theme: F, week: "d3", lesson: "d3-l5", card: "d3-k23", definition: "Enzymet som C4-växter använder, tillsammans med rubisco." },
+  { id: "t-cam", term: "CAM-växter", theme: F, week: "d3", lesson: "d3-l5", card: "d3-k24", definition: "Öppnar klyvöppningarna på natten och lagrar koldioxiden som äppelsyra i vakuolen." },
+  { id: "t-appelsyra", term: "Äppelsyra", theme: F, week: "d3", lesson: "d3-l5", card: "d3-k25", definition: "Förening (malat) som CAM-växter lagrar koldioxid i under natten." },
+
+  // ---------- Växternas livscykel ----------
+  { id: "t-mitos", term: "Mitos", theme: L, week: "d4", lesson: "d4-l3", supplement: true, definition: "Celldelning där de nya cellerna får samma kromosomuppsättning som modercellen. Så växer växten." },
+  { id: "t-meios", term: "Meios", theme: L, week: "d4", lesson: "d4-l3", card: "d4-k15", definition: "Celldelningen som bildar haploida celler, till exempel pollenkorn och äggceller." },
+  { id: "t-zygot", term: "Zygot", theme: L, week: "d4", lesson: "d4-l3", card: "d4-k17", definition: "Den befruktade äggcellen. Den är diploid (2n)." },
+  { id: "t-konlig-forokning", term: "Könlig förökning", theme: L, week: "d4", lesson: "d4-l5", definition: "Förökning genom befruktning, där ett frö bildas." },
+  { id: "t-konlos-forokning", term: "Könlös förökning", theme: L, week: "d4", lesson: "d4-l5", card: "d4-k23", definition: "Förökning utan befruktning, vegetativ förökning. Ger alltid en klon." },
+  { id: "t-haploid", term: "Haploid", theme: L, week: "d4", lesson: "d4-l3", definition: "Med enkel kromosomuppsättning (n). Pollenkorn och äggceller är haploida." },
+  { id: "t-diploid", term: "Diploid", theme: L, week: "d4", lesson: "d4-l3", definition: "Med dubbel kromosomuppsättning (2n). Moderplantan och zygoten är diploida." },
+  { id: "t-annuell", term: "Annuell", theme: L, week: "d4", lesson: "d4-l1", card: "d4-k05", definition: "Ettårig växt som blommar ett år och sedan dör." },
+  { id: "t-bienn", term: "Bienn", theme: L, week: "d4", lesson: "d4-l1", card: "d4-k06", definition: "Tvåårig växt som lagrar stärkelse första året, blommar andra året och sedan dör." },
+  { id: "t-perenn", term: "Perenn", theme: L, week: "d4", lesson: "d4-l1", card: "d4-k07", definition: "Flerårig växt." },
+  { id: "t-pistill", term: "Pistill", theme: L, week: "d4", lesson: "d4-l2", card: "d4-k10", definition: "Blommans honliga del, med märke, stift och fruktämne." },
+  { id: "t-standare", term: "Ståndare", theme: L, week: "d4", lesson: "d4-l2", card: "d4-k09", definition: "Blommans hanliga del, med sträng och knapp." },
+  { id: "t-knapp", term: "Knapp", theme: L, week: "d4", lesson: "d4-l2", definition: "Ståndarens övre del, där pollenkornen bildas." },
+  { id: "t-stift", term: "Stift", theme: L, week: "d4", lesson: "d4-l2", definition: "Den smala delen av pistillen, mellan märket och fruktämnet." },
+  { id: "t-marke", term: "Märke", theme: L, week: "d4", lesson: "d4-l2", card: "d4-k11", definition: "Pistillens topp, där pollenkornen fastnar." },
+  { id: "t-froamne", term: "Fröämne", theme: L, week: "d4", lesson: "d4-l2", card: "d4-k13", definition: "Sitter i fruktämnet och blir ett frö efter befruktningen." },
+  { id: "t-fruktamne", term: "Fruktämne", theme: L, week: "d4", lesson: "d4-l2", card: "d4-k12", definition: "Pistillens nedre del, med fröämnena. Här utvecklas frukten." },
+  { id: "t-pollinering", term: "Pollinering", theme: L, week: "d4", lesson: "d4-l4", card: "d4-k21", definition: "När pollen förs från ståndare till pistill, med vind, insekter eller däggdjur." },
+  { id: "t-pollen", term: "Pollen", theme: L, week: "d4", lesson: "d4-l3", definition: "Pollenkorn bildas genom meios i ståndarnas knappar och innehåller de hanliga könscellerna." },
+  { id: "t-pollenslang", term: "Pollenslang", theme: L, week: "d4", lesson: "d4-l3", card: "d4-k16", definition: "Växer från pollenkornet ner till äggcellen, så att befruktning kan ske." },
+  { id: "t-befruktning", term: "Befruktning", theme: L, week: "d4", lesson: "d4-l3", definition: "När en hancell från pollenkornet smälter samman med äggcellen, så att en zygot bildas." },
+  { id: "t-aggcell", term: "Äggcell", theme: L, week: "d4", lesson: "d4-l3", definition: "Den honliga könscellen. Den bildas i pistillen genom meios och är haploid." },
+  { id: "t-hancell", term: "Hancell", theme: L, week: "d4", lesson: "d4-l3", definition: "Den hanliga könscellen, som pollenslangen för till äggcellen. Den är haploid." },
+  { id: "t-fro", term: "Frö", theme: L, week: "d4", lesson: "d4-l3", definition: "Bildas av fröämnet efter befruktningen. Består av grodd (2n), frövita (3n) och fröskal (2n)." },
+  { id: "t-grodd", term: "Grodd", theme: L, week: "d4", lesson: "d4-l3", card: "d4-k19", definition: "Den lilla växten, embryot, i fröet. Den är diploid (2n)." },
+  { id: "t-frovita", term: "Frövita", theme: L, week: "d4", lesson: "d4-l3", card: "d4-k18", definition: "Endospermen i fröet. Den bildas vid befruktningen och är triploid (3n)." },
+  { id: "t-fylogenetiskt-trad", term: "Fylogenetiskt träd", theme: L, week: "d4", lesson: "d4-l1", card: "d4-k04", definition: "Visar släktskap och dessutom tid eller genetisk förändring med grenarnas längd." },
+  { id: "t-kladogram", term: "Kladogram", theme: L, week: "d4", lesson: "d4-l1", card: "d4-k03", extra: true, definition: "Visar hur arter förhåller sig till varandra, alltså vilka som är närmast släkt." },
+  { id: "t-hjartblad", term: "Hjärtblad", theme: L, week: "d4", lesson: "d4-l3", card: "d4-k20", extra: true, supplement: true, definition: "Groddens första blad, ett eller två, som ofta innehåller näring." },
+
+  // ---------- Svampar ----------
+  { id: "t-hyfer", term: "Hyfer", theme: S, week: "d5", lesson: "d5-l1", card: "d5-k04", definition: "Långa trådar av svampceller i rader." },
+  { id: "t-mycel", term: "Mycel", theme: S, week: "d5", lesson: "d5-l1", card: "d5-k05", definition: "Samlingen av hyfer. Finns till största delen under jord." },
+  { id: "t-kitin", term: "Kitin", theme: S, week: "d5", lesson: "d5-l1", card: "d5-k03", definition: "Ämnet i svamparnas cellväggar. Växter har cellulosa i stället." },
+  { id: "t-fruktkroppar", term: "Fruktkroppar", theme: S, week: "d5", lesson: "d5-l1", card: "d5-k06", definition: "Det svampen bildar för reproduktion och spridning av sporer. Räknas inte som vävnad." },
+  { id: "t-sporsackssvampar", term: "Sporsäckssvampar", theme: S, week: "d5", lesson: "d5-l2", card: "d5-k08", definition: "En grupp svampar, till exempel murklor." },
+  { id: "t-basidiesvampar", term: "Basidiesvampar", theme: S, week: "d5", lesson: "d5-l2", card: "d5-k09", definition: "En grupp svampar med bland annat matsvampar. Befruktningen sker i fruktkroppens basidier." },
+  { id: "t-lavar", term: "Lavar", theme: S, week: "d5", lesson: "d5-l3", card: "d5-k15", definition: "En svamp (mykobiont) som lever ihop med en grönalg eller en blågrön bakterie (fotobiont)." },
+  { id: "t-mykorrhiza", term: "Mykorrhiza", theme: S, week: "d5", lesson: "d5-l3", card: "d5-k14", definition: "Svamprot: svampen ger vatten och mineralnäring, växten ger socker." },
+
+  // ---------- Hållbar utveckling ----------
+  { id: "t-kolsanka", term: "Kolsänka", theme: H, week: "d6", lesson: "d6-l2", card: "d6-k04", definition: "Något som binder koldioxid och lagrar kolet, till exempel skog." },
+  { id: "t-vader", term: "Väder", theme: H, week: "d6", lesson: "d6-l3", supplement: true, definition: "Förhållandena i atmosfären på kort sikt. Meteorologer gör väderprognoser för timmar till veckor." },
+  { id: "t-klimat", term: "Klimat", theme: H, week: "d6", lesson: "d6-l3", definition: "De genomsnittliga förhållandena i atmosfären i en region under lång tid: temperatur, luftfuktighet, lufttryck, vind och nederbörd." },
+  { id: "t-global-uppvarmning", term: "Global uppvärmning", theme: H, week: "d6", lesson: "d6-l3", definition: "Att jordens genomsnittstemperatur ökar, främst genom den förstärkta växthuseffekten." },
+  { id: "t-vaxthuseffekten", term: "Växthuseffekten", theme: H, week: "d6", lesson: "d6-l3", card: "d6-k08", definition: "Växthusgaser tar upp en del av jordens värmestrålning och strålar ut den igen, så att värme stannar kvar." },
+  { id: "t-forstarkt-vaxthuseffekt", term: "Förstärkt växthuseffekt", theme: H, week: "d6", lesson: "d6-l3", card: "d6-k11", definition: "Människans utsläpp av växthusgaser förstärker växthuseffekten och ger global uppvärmning." },
+  { id: "t-vaxthusgaser", term: "Växthusgaser", theme: H, week: "d6", lesson: "d6-l3", card: "d6-k09", definition: "Gaser som tar upp värmestrålning, framför allt vattenånga, koldioxid och metan." },
+  { id: "t-albedoeffekten", term: "Albedoeffekten", theme: H, week: "d6", lesson: "d6-l3", card: "d6-k13", definition: "Albedo är hur stor del av det inkommande solljuset som reflekteras. Smältande is ger lägre albedo och mer uppvärmning." },
+  { id: "t-biologisk-mangfald", term: "Biologisk mångfald (biodiversitet)", theme: H, week: "d6", lesson: "d6-l4", card: "d6-k16", definition: "Variationen av liv på tre nivåer: genetisk mångfald, artrikedom och mångfald av ekosystem." },
+  { id: "t-genetisk-mangfald", term: "Genetisk mångfald", theme: H, week: "d6", lesson: "d6-l4", card: "d6-k17", definition: "Variationen mellan individer inom samma art." },
+  { id: "t-artrikedom", term: "Artrikedom", theme: H, week: "d6", lesson: "d6-l4", definition: "Många olika arter inom ett område. Alla arter bidrar till ekosystemets funktion." },
+  { id: "t-mangfald-ekosystem", term: "Mångfald av ekosystem", theme: H, week: "d6", lesson: "d6-l4", definition: "Variationen mellan olika naturtyper och landskap, till exempel skogar, våtmarker och ängar." },
+  { id: "t-ekosystemtjanster", term: "Ekosystemtjänster", theme: H, week: "d6", lesson: "d6-l4", card: "d6-k18", definition: "Det naturen gör som människan har nytta av, till exempel pollinering, rent vatten och nedbrytning." },
+  { id: "t-naringsamnen", term: "Näringsämnen (kväve och fosfor)", theme: H, week: "d6", lesson: "d6-l5", definition: "Ämnen som växter behöver för att bygga DNA, ATP, proteiner och cellmembran." },
+  { id: "t-overgodning", term: "Övergödning", theme: H, week: "d6", lesson: "d6-l5", card: "d6-k20", definition: "När för mycket näringsämnen, främst kväve och fosfor, tillförs ett ekosystem." },
+  { id: "t-syrefria-bottnar", term: "Syrefria döda bottnar", theme: H, week: "d6", lesson: "d6-l5", card: "d6-k21", definition: "Uppstår när nedbrytare förbrukar syret medan de bryter ner döda växtplankton." },
+  { id: "t-miljogifter", term: "Miljögifter", theme: H, week: "d6", lesson: "d6-l6", definition: "Giftiga ämnen i naturen som bryts ner långsamt och kan lagras i organismers vävnader." },
+  { id: "t-bioackumulation", term: "Bioackumulation", theme: H, week: "d6", lesson: "d6-l6", card: "d6-k22", definition: "Halten miljögift i en organism ökar över tid." },
+  { id: "t-biomagnifikation", term: "Biomagnifikation", theme: H, week: "d6", lesson: "d6-l6", card: "d6-k23", definition: "Koncentrationen miljögift ökar för varje trofinivå i näringskedjan." },
+  { id: "t-planetara-granser", term: "De planetära gränserna", theme: H, week: "d6", lesson: "d6-l6", card: "d6-k25", supplement: true, definition: "Gränser för nio av jordens system som tillsammans håller planeten stabil. Enligt en rapport från 2026 är sju överskridna." },
 ];
