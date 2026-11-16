@@ -36,7 +36,7 @@
 .sk-navlink[aria-current="page"] { background: var(--accent-soft); color: var(--accent-ink); }
 .sk-navlink .sk-icon { color: var(--ink-muted); }
 .sk-navlink[aria-current="page"] .sk-icon { color: var(--accent-ink); }
-.sk-navpart { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: start; column-gap: var(--space-3); }
+.sk-navpart { flex: 1; min-width: 0; display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: start; column-gap: var(--space-3); }
 .sk-navpart__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .sk-navpart__kicker { font-size: 12px; line-height: 16px; font-weight: 600; color: var(--ink-muted); }
 .sk-navlink[aria-current="page"] .sk-navpart__kicker { color: var(--accent-ink); }

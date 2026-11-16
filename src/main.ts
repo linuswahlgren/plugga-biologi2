@@ -53,7 +53,8 @@ const applyTheme = () => {
   if (t === "system") delete root.dataset.theme;
   else root.dataset.theme = t;
   topbar.setTheme(effectiveTheme(t));
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", effectiveTheme(t) === "dark" ? "#111312" : "#f6f6f3");
+  // The browser bar takes the page background token of the theme now in use.
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", getComputedStyle(root).getPropertyValue("--bg").trim());
 };
 
 // ---------- Shell ----------
@@ -172,6 +173,7 @@ function render(): void {
 
 window.addEventListener("hashchange", render);
 render();
+performance.mark("plugga-ready"); // first view rendered and interactive (measured in tests/quality.e2e.ts)
 
 // ---------- Installable app, updates, storage ----------
 registerServiceWorker();

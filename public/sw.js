@@ -30,8 +30,9 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin || url.pathname.endsWith("/version.json")) return;
+  // Pages are revalidated with the server, so a new version is never held back by the HTTP cache.
   event.respondWith(
-    fetch(request)
+    fetch(request, request.mode === "navigate" ? { cache: "no-cache" } : undefined)
       .then((response) => {
         if (response.ok) {
           const copy = response.clone();

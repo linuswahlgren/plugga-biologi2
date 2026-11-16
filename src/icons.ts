@@ -55,7 +55,3 @@ export function icon(name: IconName, size: 16 | 18 | 20 | 24 = 20): SVGSVGElemen
   for (const d of ICONS[name]) svg.appendChild(s("path", { d }));
   return svg;
 }
-
-/** The favicon and app icon: the letter P in an accent square. Used inline in the HTML head. */
-export const FAVICON_SVG =
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1d6b4f"/><path d="M24 46V18h10.5a8.5 8.5 0 0 1 0 17H24" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>';

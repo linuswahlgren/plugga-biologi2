@@ -54,7 +54,7 @@ The extractor exports slide pictures to `material/_extracted/prov1/media/`. Thes
 
 ## Phase 3 notes
 
-- **Counts:** 6 parts, 30 lessons, 138 cards, 112 quiz questions, 48 practice items, 43 key points, 17 study questions with model answers, 123 glossary terms (all 118 concept-list terms plus 13 extra lesson terms, some on the list under a combined name).
+- **Counts:** 6 parts, 30 lessons, 138 cards, 112 quiz questions (114 after Phase 5), 48 practice items, 43 key points, 17 study questions with model answers, 123 glossary terms (all 118 concept-list terms plus 13 extra lesson terms, some on the list under a combined name).
 - **Fact-check:** three separate subagents compared Del 1–2, Del 3–4 and Del 5–6 with the hub and glossary against `material/_extracted/prov1/`. Every finding was fixed. Most important: the phloem is the bark's innermost living layer (Del 2 bild 3), "kläder" is a basic need (hållbar bild 3), fungal cells are n + n after fusion (Del 3 bild 26), and the pollination definition cites hållbar bild 18.
 - **Verified on the web (2026-11-16):** Planetary Health Check 2026 (Potsdam Institute for Climate Impact Research, 21 Sep 2026): seven of nine planetary boundaries transgressed. The slide (hållbar bild 24) shows an older assessment with six of nine; Plugga says so. Anthropocene: rejected as a formal epoch by the IUGS in March 2024.
 - **Extra correction row** on "Om materialet": seed ploidy (Del 3 bild 7 text says the seed is 2n; the slide's image shows embryo 2n, endosperm 3n, seed coat 2n).
@@ -69,13 +69,31 @@ The extractor exports slide pictures to `material/_extracted/prov1/media/`. Thes
 - **iPhone storage:** WebKit may evict data for sites that have not been used for a while; persistent storage is granted mainly to home-screen web apps (WebKit blog, "Updates to Storage Policy"). Mina framsteg words the tip that way and asks for `navigator.storage.persist()` after the first real progress.
 - **Progress schema:** additive field `settings.backupSnoozedUntil` ("Inte nu" on the backup card); `Course.url` holds the published address.
 
+## Phase 5 notes
+
+- **Quality gates** (`tests/quality.e2e.ts`, real site): every route (parts × tabs, hubs, Prov 2, Mina framsteg, the `#/omgang/…` pages, an unknown route) renders an h1, a title ending in "| Plugga", the current breadcrumb, no console errors and no requests to other sites; a scan of all rendered text and `aria-label`/`title`/`alt`/`placeholder` finds no English UI words; axe at 375 × 812, 820 × 1180 and 1440 × 900 in light and dark, in all three browsers; file size; start-up (Chromium only: CPU throttling needs its DevTools protocol).
+- **Start-up:** `main.ts` sets `performance.mark("plugga-ready")` after the first render. With Chromium's CPU slowed down 4× it was about 0.13 s on Linus2026 (three runs: 125–128 ms, local server); the test requires under 1 s.
+- **Size:** `dist/site/index.html` about 470 KB, the backup file about the same; the budget is 700 KB.
+- **Final screenshots** of the real site: `npm run shots:site` → `review/fas5/` (`tests/site.shots.ts`). Fixed after looking at them: the sidebar progress bars were only as wide as the part title; the icon-only "Dela" button on phones had a filled background unlike the other top-bar icon buttons.
+- **Handover:** `README.md` (Swedish, maintainer and student parts), `.claude/skills/ny-del` and `.claude/skills/publicera`.
+- **Independent review** (a subagent that had not seen the work, against BUILD.md §12) and what was fixed:
+  - The test course no longer borrows the real Prov 2 or `currentExam`: it has its own upcoming Prov 2, so adding Prov 2 parts or moving to Prov 3 does not break `learning.e2e.ts` or the unit specs. The specs that check the real Prov 2 on the real site (`app.e2e.ts`) still need updating then; README and `/ny-del` say which.
+  - `/publicera`: the live `version.json` is compared with the time of the push (the workflow builds again, so the build time always differs from the local one); the first push has no `origin/main`; the update toast appears when the open tab becomes visible again.
+  - README: `npx playwright install` after `npm ci`; a commit step before `git push`.
+  - The language scan also opens running sessions, feedback, results, the share, reset and shortcut dialogs.
+  - A mastery unit test compared a value with itself; it now checks the rescaling.
+  - `index.html` takes the course title, area, id and address from the course (`%course.title%` …, filled in by `vite.config.ts`), so only `content/` names the subject. The browser bar colour comes from the `--bg` token; the print border uses `--line`; the unused `FAVICON_SVG` is gone.
+  - The service worker revalidates pages with the server (`cache: "no-cache"`), so the HTTP cache never holds back a new version.
+  - Del 1 had one A-level quiz question; two were added (`d1-q17` osmosis across a sugar membrane, `d1-q18` destillerat vatten vs isoton), so Del 1 is 18 questions, 8 E / 7 C / 3 A. Both were fact-checked by a separate subagent.
+  - Left as is: the content check's messages live in `src/check.ts`, not `sv.ts` (they are Swedish and only shown when the content is broken); the offline test runs in Chromium only (Playwright cannot take Firefox and WebKit offline with a service worker reliably); start-up timing is Chromium only.
+
 ## Phase status
 
 | Phase | Status |
 | --- | --- |
 | 0 · Read and plan | Done, approved 2026-11-16 |
-| 1 · Foundation | Done (commit `0beed4e`); checkpoint shown with screenshots in `review/fas1/` |
+| 1 · Foundation | Done (commit `5b60029`, together with Phase 0); checkpoint shown with screenshots in `review/fas1/` |
 | 2 · Learning features | Done 2026-11-16 (on Linus2026); screenshots of the test course in `review/fas2/` |
-| 3 · Content | Done 2026-11-16; waiting for the user's review at the checkpoint |
+| 3 · Content | Done 2026-11-16; approved by the user (they started Phase 4) |
 | 4 · Sharing and keeping progress | Done 2026-11-16 (no checkpoint) |
-| 5 · Quality and handover | |
+| 5 · Quality and handover | Done 2026-11-17 locally; waiting at the checkpoint for the user to publish (see README.md, "Första publiceringen") |

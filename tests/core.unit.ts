@@ -136,9 +136,12 @@ test.describe("mastery", () => {
     expect(partMastery(part, p).percent).toBe(0);
     expect(partMastery(part, p).status).toBe("notStarted");
     p.lessons["d1-l1"] = "2026-11-16";
+    // A part with only two lessons: the other components are dropped, so one lesson = 50 %.
+    const onlyLessons = { ...part, lessons: part.lessons.slice(0, 2), cards: [], quiz: [], practice: [] };
+    expect(partMastery(onlyLessons, p).percent).toBe(50);
+    // A full part: lessons weigh 20 of 100.
     const m = partMastery(part, p);
-    // Lessons are the only component with items in Phase 1, so one of two lessons = 50 %.
-    expect(m.percent).toBe(part.cards.length || part.quiz.length || part.practice.length ? m.percent : 50);
+    expect(m.percent).toBe(Math.round(20 / part.lessons.length));
     expect(m.status).toBe("inProgress");
   });
 });

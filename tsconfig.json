@@ -17,5 +17,5 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "content", "scripts", "tests", "vite.config.ts", "playwright.config.ts", "playwright.shots.config.ts"]
+  "include": ["src", "content", "scripts", "tests", "vite.config.ts", "playwright.config.ts", "playwright.shots.config.ts", "playwright.site-shots.config.ts"]
 }

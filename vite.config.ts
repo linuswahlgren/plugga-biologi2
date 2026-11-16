@@ -83,6 +83,23 @@ function notices(): Plugin {
   return { name: "plugga-notices", transformIndexHtml: (html) => html.replace("</head>", `${NOTICES}\n  </head>`) };
 }
 
+/** Fills %course.title%, %course.area%, %course.id% and %course.url% in index.html, so only content/ names the subject. */
+function courseHead(): Plugin {
+  const esc = (v: string) => v.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const values: Record<string, string> = { title: course.title, area: course.area, id: course.id, url: course.url ?? "./" };
+  return {
+    name: "plugga-course-head",
+    transformIndexHtml: {
+      order: "pre",
+      handler: (html) =>
+        html.replace(/%course\.(\w+)%/g, (m, key: string) => {
+          if (!(key in values)) throw new Error(`index.html: unknown placeholder ${m}`);
+          return esc(values[key]);
+        }),
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const isBackup = mode === "backup";
   const isE2E = mode === "e2e";
@@ -94,7 +111,7 @@ export default defineConfig(({ mode }) => {
       __BUILD_TARGET__: JSON.stringify(isBackup ? "backup" : isSite ? "site" : "dev"),
       __BUILD_TIME__: JSON.stringify(BUILD_TIME),
     },
-    plugins: [viteSingleFile({ removeViteModuleLoader: true }), notices(), ...(isSite ? [hostedSite()] : []), ...(isBackup ? [moveBackupFile()] : [])],
+    plugins: [courseHead(), viteSingleFile({ removeViteModuleLoader: true }), notices(), ...(isSite ? [hostedSite()] : []), ...(isBackup ? [moveBackupFile()] : [])],
     build: {
       outDir: isBackup ? BACKUP_TMP : isE2E ? "dist/e2e" : "dist/site",
       emptyOutDir: true,

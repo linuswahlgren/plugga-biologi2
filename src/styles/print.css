@@ -13,7 +13,7 @@
   .sk-printonly { display: block; }
   .sk-app { display: block; }
   .sk-main { padding: 0; }
-  .sk-card { border-color: #bbbbbb; break-inside: avoid; box-shadow: none; }
+  .sk-card { border-color: var(--line); break-inside: avoid; box-shadow: none; }
   a { color: inherit; text-decoration: none; }
 
   /* Any print view: no controls. */

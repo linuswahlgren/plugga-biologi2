@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Plugga – Biologi 2</title>
-    <meta name="description" content="Plugga: studieplattform för Biologi 2 – Växtfysiologi och cellbiologi. Lär dig, öva och testa dig själv. Dina framsteg sparas bara på din egen enhet." />
+    <title>Plugga – %course.title%</title>
+    <meta name="description" content="Plugga: studieplattform för %course.title% – %course.area%. Lär dig, öva och testa dig själv. Dina framsteg sparas bara på din egen enhet." />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="application-name" content="Plugga" />
     <!-- Link previews (Teams). Tags only: nothing here is fetched by the page itself. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Plugga" />
-    <meta property="og:title" content="Plugga – Biologi 2" />
-    <meta property="og:description" content="Lär dig, öva och testa dig själv inför proven i Biologi 2. Dina framsteg sparas bara på din egen enhet." />
+    <meta property="og:title" content="Plugga – %course.title%" />
+    <meta property="og:description" content="Lär dig, öva och testa dig själv inför proven i %course.title%. Dina framsteg sparas bara på din egen enhet." />
     <meta property="og:locale" content="sv_SE" />
-    <meta property="og:url" content="https://linuswahlgren.github.io/plugga-biologi2/" />
-    <meta property="og:image" content="https://linuswahlgren.github.io/plugga-biologi2/icons/icon-512.png" />
+    <meta property="og:url" content="%course.url%" />
+    <meta property="og:image" content="%course.url%icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <meta name="referrer" content="no-referrer" />
     <meta name="theme-color" content="#f6f6f3" />
@@ -24,7 +24,7 @@
       // Apply the saved theme before first paint to avoid a flash.
       (function () {
         try {
-          var raw = localStorage.getItem("plugga:bio2-vaxtfys-cellbio-ht26");
+          var raw = localStorage.getItem("plugga:%course.id%");
           var t = raw && JSON.parse(raw).settings && JSON.parse(raw).settings.theme;
           if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
         } catch (e) {}

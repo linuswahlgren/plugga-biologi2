@@ -115,7 +115,9 @@ const fixtureD7: Week = {
 };
 
 const prov1 = real.exams.find((e) => e.id === "prov1")!;
-const prov2 = real.exams.find((e) => e.id === "prov2")!;
+// Its own upcoming Prov 2, so the tests don't change when the real one gets parts, study
+// questions or is done (README: "När prov 2 är skrivet").
+const fixtureProv2: Exam = { id: "prov2", title: "Prov 2", date: "2026-12-07", status: "upcoming" };
 const fixtureProv1: Exam = {
   ...prov1,
   studyQuestions: [
@@ -139,7 +141,8 @@ const glossary: Term[] = [
 
 export const course: Course = {
   ...real,
-  exams: [prov2, fixtureProv1],
+  currentExam: "prov2",
+  exams: [fixtureProv2, fixtureProv1],
   weeks: [fixtureD1, fixtureD2, fixtureD7],
   glossary,
 };

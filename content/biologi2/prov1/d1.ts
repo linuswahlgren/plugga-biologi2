@@ -339,6 +339,20 @@ Vattnet i växtcellen lagras i **vakuolen**. När vakuolen är full spänner den
       answer: "Vatten rör sig åt båda hållen, men lika mycket in som ut",
       explain: "Med lika koncentration av lösta ämnen blir det inget nettoflöde. Vattenmolekylerna rör sig ändå hela tiden, åt båda hållen.",
     },
+    {
+      id: "d1-q17", level: "A", lesson: "d1-l4",
+      q: "Ett membran släpper igenom vatten men **inte** socker. På sida A finns en stark sockerlösning och på sida B rent vatten. Vad händer?",
+      options: ["Vatten strömmar från sida B till sida A", "Vatten strömmar från sida A till sida B", "Socker strömmar från sida A till sida B", "Ingenting rör sig, eftersom sockret stoppas"],
+      answer: "Vatten strömmar från sida B till sida A",
+      explain: "Vatten rör sig med osmos mot den sida där det finns mest lösta ämnen, alltså mot sida A. Sockret kan inte passera membranet, så det är bara vattnet som rör sig.",
+    },
+    {
+      id: "d1-q18", level: "A", lesson: "d1-l5",
+      q: "Två likadana salladsblad läggs i destillerat vatten respektive i en isoton lösning. I vilket blad får cellerna högst turgortryck?",
+      options: ["Inget av dem, eftersom cellväggen hindrar vatten från att komma in", "Båda får lika högt tryck, eftersom vatten rör sig åt båda hållen", "Bladet i destillerat vatten, där vatten strömmar in i cellerna", "Bladet i den isotona lösningen, där vatten strömmar in i cellerna"],
+      answer: "Bladet i destillerat vatten, där vatten strömmar in i cellerna",
+      explain: "Destillerat vatten är hypotont, så vatten strömmar in, vakuolen fylls och spänner ut cellväggen med turgortryck. I en isoton lösning strömmar lika mycket vatten in som ut, så det blir inget nettoflöde in och inget ökat turgortryck.",
+    },
   ],
   practice: [
     {

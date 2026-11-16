@@ -233,7 +233,9 @@
 .sk-topbar__share { gap: var(--space-1); }
 @media (max-width: 519px) {
   .sk-topbar__sharelabel { display: none; }
-  .sk-topbar__share { width: var(--control-height); padding: 0; min-height: var(--control-height); border-color: transparent; }
+  /* Icon only, like the other top-bar icon buttons (.sk-iconbtn). */
+  .sk-topbar__share { width: var(--control-height); padding: 0; min-height: var(--control-height); border-color: transparent; background: transparent; }
+  .sk-topbar__share:hover { background: var(--surface-sunken); }
 }
 .sk-dialog--share { width: min(440px, calc(100vw - 32px)); }
 .sk-qrwrap { display: flex; justify-content: center; }

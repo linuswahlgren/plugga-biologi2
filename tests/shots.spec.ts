@@ -1,6 +1,6 @@
 /**
  * npm run shots: screenshots for review at 375×812, 820×1180 and 1440×900, light and dark, to
- * review/<PLUGGA_PHASE>/ (default "fas2"). Uses the site built with the test course (:4174) so the
+ * review/<PLUGGA_PHASE>/ (default "fas4"). Uses the site built with the test course (:4174) so the
  * learning features have items to show before the real ones are written.
  */
 import { test, expect, type Page } from "@playwright/test";

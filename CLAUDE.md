@@ -1,12 +1,13 @@
 # Plugga
 
-Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. Prov 1 is shown as repetition. Prov 2 (mån 7 dec 2026) is added part by part with `/ny-del`. The build script is `BUILD.md`. This file is the working summary. (Draft from Phase 1, completed in Phase 5.)
+Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. Prov 1 is shown as repetition. Prov 2 (mån 7 dec 2026) is added part by part with `/ny-del`. The build script is `BUILD.md`. This file is the working summary.
 
-## Status (2026-11-16)
+## Status (2026-11-17)
 
-- **Phases 0–4 are done.** The user approved Phase 3 by starting Phase 4. The approved plan, the decisions and the findings from the slide images are in `docs/plan.md`. **Read it before continuing.**
-- **Next is Phase 5 (quality and handover, BUILD.md §11)** and its ⏸ checkpoint: README.md, the skills `/ny-del` and `/publicera`, the review subagent, final screenshots. Publishing needs the user: they sign in to GitHub, create the repository `linuswahlgren/plugga-biologi2`, and set Settings › Pages › Source to GitHub Actions. Never push without asking.
-- **The learning features are tested on a test course,** not on real content: `tests/fixtures/course.ts` keeps the real course and Del 1's lessons and swaps in a fixed set of items, plus a Prov 2 part. `vite build --mode e2e` builds it to `dist/e2e`, served on :4174 for `tests/learning.e2e.ts` and `npm run shots`. It is never shipped. Real items use plain ids (`d1-k01`); the fixture uses `x` ids (`d1-xk01`) so they never collide.
+- **Phases 0–5 are done** (Phase 5 locally). The approved plan, the decisions, the findings from the slide images and the notes per phase are in `docs/plan.md`. **Read it before continuing.**
+- **Waiting at the Phase 5 ⏸ checkpoint for the first publication.** The user signs in to GitHub, creates the public repository `linuswahlgren/plugga-biologi2` (empty), sets Settings › Pages › Source to GitHub Actions, and pushes (`README.md`, "Första publiceringen"). Never push without asking.
+- **Next: Prov 2.** When the user has material in `material/prov2/`, use `/ny-del` (`.claude/skills/ny-del/SKILL.md`); publish with `/publicera`.
+- **The learning features are tested on a test course,** not on real content: `tests/fixtures/course.ts` keeps the real course and Del 1's lessons and swaps in a fixed set of items, its own upcoming Prov 2 (`currentExam: "prov2"`) and a Prov 2 part. When real Prov 2 parts arrive, only the real-site specs in `tests/app.e2e.ts` that expect Prov 2 to be empty change. `vite build --mode e2e` builds it to `dist/e2e`, served on :4174 for `tests/learning.e2e.ts` and `npm run shots`. It is never shipped. Real items use plain ids (`d1-k01`); the fixture uses `x` ids (`d1-xk01`) so they never collide.
 - **Decided 2026-11-16:** the flower labels on Del 3 bild 5 (kronblad, foderblad, knapp, stift, sträng) come from the material. Cite that slide; they are **not** tagged "Kompletterande".
 - **On Linus2026** the six lesson files were copied from Downloads to `material/prov1/`. The summary deck `Biologi nivå 2.pptx` is not there (optional: facts come from the lesson decks, and `docs/plan.md` records what the summary deck adds). Python 3.13 is installed in `%LOCALAPPDATA%\Programs\Python\Python313` (open a new shell if `python` is not found); `material/_extracted/prov1/` was made with it on 2026-11-16.
 - **On a new computer,** check that `material/prov1/` and `material/_extracted/prov1/` exist; they are never in Git. If they're missing, ask the user to copy them before any content work. `npm run extract` rebuilds `_extracted` from `material/prov1`.
@@ -34,14 +35,16 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
 | `npm run build:e2e` | The site with the test course, `dist/e2e/index.html` (tests and screenshots only) |
 | `npm run preview` | Serve `dist/site` on http://localhost:4173 |
 | `npm run check` | Content check (exits 1 on errors; `-- --alla` lists every warning) |
-| `npm test` | Build (site, backup, test course), then Playwright: unit specs + Chromium, Firefox, WebKit |
-| `npm run shots` | Screenshots of the test course build to `review/<fas>/` (set `PLUGGA_PHASE`, default `fas2`) |
+| `npm test` | Build (site, backup, test course), then Playwright: unit specs + Chromium, Firefox, WebKit (once per computer: `npx playwright install`) |
+| `npm run shots` | Screenshots of the test course build to `review/<fas>/` (set `PLUGGA_PHASE`, default `fas4`) |
+| `npm run shots:site` | Screenshots of the real site to `review/<fas>/` (default `fas5`) |
 | `npm run extract` | `material/prov1` → `material/_extracted/prov1` (Markdown + `media/`) |
 | `node scripts/make-icons.mjs` | Renders the app icons in `public/icons/` from the logo (only when the logo changes) |
 
 ## Folder map
 
 - `content/` holds course data. `content/index.ts` picks the course. `biologi2/course.ts` holds settings and exams. `biologi2/prov1/{d1…d6,hub,glossary}.ts` hold Prov 1. `biologi2/prov2/` holds Prov 2.
+- `index.html` takes the course title, area, id and address from `%course.…%` placeholders that `vite.config.ts` fills in.
 - `src/` holds the app:
   - `main.ts` is the shell and routing. `router.ts` is the hash router. `markup.ts` renders text marks.
   - `check.ts` is the content check. `answer.ts` does answer matching. `mastery.ts` and `recommend.ts` hold the progress rules.
@@ -53,7 +56,8 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
   - `extract_material.py` uses only the Python stdlib.
   - `check-content.ts` runs directly with Node 24+.
   - `run.mjs` is the tool runner (see below).
-- `tests/`: `*.unit.ts` run in Node, `*.e2e.ts` run in three browsers (`app.e2e.ts` on the real build, `learning.e2e.ts` on the test course), and `shots.spec.ts` takes the screenshots. `fixtures/course.ts` is the test course.
+- `tests/`: `*.unit.ts` run in Node, `*.e2e.ts` run in three browsers (`app.e2e.ts` and `quality.e2e.ts` on the real build, `learning.e2e.ts` and `sharing.e2e.ts` on the test course). `shots.spec.ts` and `site.shots.ts` take the screenshots. `fixtures/course.ts` is the test course.
+- `.claude/skills/`: `ny-del` (add a part from new material) and `publicera` (build, test, push, confirm live). `README.md` is the Swedish guide for the maintainer and the students.
 
 ## Text marks (BUILD.md §6.3 plus one Plugga extension)
 
