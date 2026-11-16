@@ -1,0 +1,25 @@
+# Course files are private: the teacher's slides and documents, and the text
+# extracted from them, are never committed. The repository is public.
+material/
+review/
+
+# Build output and dependencies
+dist/
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+.vite/
+
+# Transfer zips made for moving the project between computers
+/*.zip
+
+# Machine-specific launcher config (the skills in .claude/skills are committed)
+.claude/launch.json
+.claude/settings.local.json
+
+# Editors and OS
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

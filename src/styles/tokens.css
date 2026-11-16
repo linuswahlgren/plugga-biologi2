@@ -1,0 +1,137 @@
+/* Study Kit design tokens (docs/design-system.md §7.3–7.6). Tokens only: no literal colours elsewhere. */
+
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("../fonts/figtree-latin.woff2") format("woff2-variations"), url("../fonts/figtree-latin.woff2") format("woff2");
+}
+
+:root {
+  color-scheme: light;
+
+  /* Colour: light (default) */
+  --bg: #f6f6f3;
+  --surface: #ffffff;
+  --surface-sunken: #efefeb;
+  --line: #e3e3de;
+  --line-strong: #8a8f8b;
+  --ink: #1a1c1b;
+  --ink-muted: #5b605d;
+  --accent: #1d6b4f;
+  --accent-hover: #175a42;
+  --on-accent: #ffffff;
+  --accent-soft: #e4f0ea;
+  --accent-ink: #155a40;
+  --danger: #b3410e;
+  --danger-soft: #fbebe2;
+  --danger-ink: #93350b;
+  --success: var(--accent);
+  --success-soft: var(--accent-soft);
+  --success-ink: var(--accent-ink);
+  --focus: var(--accent);
+  --shadow-raised: 0 1px 2px rgba(17, 19, 18, 0.06), 0 6px 16px rgba(17, 19, 18, 0.06);
+  --scrim: rgba(17, 19, 18, 0.32);
+
+  /* Type */
+  --font-sans: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Space (4 px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Shape */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --sidebar-width: 272px;
+  --content-width: 760px;
+  --notes-width: 320px;
+  --control-height: 40px;
+  --control-height-sm: 32px;
+  --topbar-height: 56px;
+
+  /* Motion */
+  --dur-color: 150ms;
+  --dur-drawer: 200ms;
+  --dur-progress: 300ms;
+  --dur-flip: 450ms;
+}
+
+/* Accent presets for future courses. This course uses green (the defaults above). */
+:root[data-accent="blue"] { --accent: #2158a6; --accent-hover: #1a4785; --accent-soft: #e6edf7; --accent-ink: #1a4785; }
+:root[data-accent="teal"] { --accent: #0e6773; --accent-hover: #0b525c; --accent-soft: #e1eff0; --accent-ink: #0b525c; }
+:root[data-accent="plum"] { --accent: #7a3d77; --accent-hover: #68305f; --accent-soft: #f3e9f2; --accent-ink: #68305f; }
+:root[data-accent="slate"] { --accent: #3d4a5c; --accent-hover: #323d4c; --accent-soft: #e9ecf0; --accent-ink: #323d4c; }
+
+/* Colour: dark. Applied when the system prefers dark (unless light is forced) or when dark is chosen. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #111312;
+    --surface: #1a1d1b;
+    --surface-sunken: #151816;
+    --line: #2b2f2c;
+    --line-strong: #6f7672;
+    --ink: #ecedea;
+    --ink-muted: #a2a8a4;
+    --accent: #5cc49a;
+    --accent-hover: #74d1aa;
+    --on-accent: #0b1f16;
+    --accent-soft: #1b3027;
+    --accent-ink: #8edcb9;
+    --danger: #f2946a;
+    --danger-soft: #3a2219;
+    --danger-ink: #f6ad8c;
+    --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --scrim: rgba(0, 0, 0, 0.55);
+  }
+  :root:not([data-theme="light"])[data-accent="blue"] { --accent: #86b3ee; --accent-hover: #aecbf3; --accent-soft: #1c2738; --accent-ink: #aecbf3; --on-accent: #0c1a2c; }
+  :root:not([data-theme="light"])[data-accent="teal"] { --accent: #5ec4cf; --accent-hover: #93dbe2; --accent-soft: #16302f; --accent-ink: #93dbe2; --on-accent: #0a1f22; }
+  :root:not([data-theme="light"])[data-accent="plum"] { --accent: #d99dd5; --accent-hover: #e8bfe5; --accent-soft: #33222f; --accent-ink: #e8bfe5; --on-accent: #2a1028; }
+  :root:not([data-theme="light"])[data-accent="slate"] { --accent: #a9b6c8; --accent-hover: #c6d0dd; --accent-soft: #232831; --accent-ink: #c6d0dd; --on-accent: #141a22; }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111312;
+  --surface: #1a1d1b;
+  --surface-sunken: #151816;
+  --line: #2b2f2c;
+  --line-strong: #6f7672;
+  --ink: #ecedea;
+  --ink-muted: #a2a8a4;
+  --accent: #5cc49a;
+  --accent-hover: #74d1aa;
+  --on-accent: #0b1f16;
+  --accent-soft: #1b3027;
+  --accent-ink: #8edcb9;
+  --danger: #f2946a;
+  --danger-soft: #3a2219;
+  --danger-ink: #f6ad8c;
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --scrim: rgba(0, 0, 0, 0.55);
+}
+:root[data-theme="dark"][data-accent="blue"] { --accent: #86b3ee; --accent-hover: #aecbf3; --accent-soft: #1c2738; --accent-ink: #aecbf3; --on-accent: #0c1a2c; }
+:root[data-theme="dark"][data-accent="teal"] { --accent: #5ec4cf; --accent-hover: #93dbe2; --accent-soft: #16302f; --accent-ink: #93dbe2; --on-accent: #0a1f22; }
+:root[data-theme="dark"][data-accent="plum"] { --accent: #d99dd5; --accent-hover: #e8bfe5; --accent-soft: #33222f; --accent-ink: #e8bfe5; --on-accent: #2a1028; }
+:root[data-theme="dark"][data-accent="slate"] { --accent: #a9b6c8; --accent-hover: #c6d0dd; --accent-soft: #232831; --accent-ink: #c6d0dd; --on-accent: #141a22; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-color: 0ms;
+    --dur-drawer: 0ms;
+    --dur-progress: 0ms;
+    --dur-flip: 0ms;
+  }
+}
