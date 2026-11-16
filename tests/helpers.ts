@@ -21,7 +21,7 @@ export function guard(page: Page, opts: { origin?: string } = {}) {
       return;
     }
     const origin = new URL(url).origin;
-    if (origin !== "http://localhost:4173") problems.push(`request to other origin: ${url}`);
+    if (origin !== "http://localhost:4173" && origin !== "http://localhost:4174") problems.push(`request to other origin: ${url}`);
   });
   return {
     done() {
@@ -38,4 +38,13 @@ export async function open(page: Page, hash = "#/", opts: { clock?: boolean } = 
 
 export function isMobile(info: TestInfo) {
   return (info.project.use.viewport?.width ?? 1280) < 860;
+}
+
+/** The site built with the test course (tests/fixtures/course.ts). */
+export const FIXTURE_URL = "http://localhost:4174/";
+
+/** Read stored progress from the page. */
+export async function progress(page: Page): Promise<any> {
+  await page.waitForTimeout(400); // debounced save (300 ms)
+  return page.evaluate(() => JSON.parse(localStorage.getItem("plugga:bio2-vaxtfys-cellbio-ht26") || "{}"));
 }

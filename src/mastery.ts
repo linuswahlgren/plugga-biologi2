@@ -72,13 +72,29 @@ export function examMastery(c: NCourse, examId: string, p: Progress, today = tod
   return Math.round(parts.reduce((s, part) => s + partMastery(part, p, today).percent, 0) / parts.length);
 }
 
+/** Cards (including glossary terms practised as cards) due on or before `today`. */
 export function cardsDueToday(c: NCourse, p: Progress, today = todayISO()): number {
+  return cardsDueBy(c, p, today);
+}
+
+/** Cards due on or before a date. */
+export function cardsDueBy(c: NCourse, p: Progress, date: string): number {
   let n = 0;
-  for (const card of c.cardById.values()) {
+  for (const card of c.studyCardById.values()) {
     const st = p.cards[card.id];
-    if (st && st.due <= today) n++;
+    if (st && st.due <= date) n++;
   }
   return n;
+}
+
+/** How many practised cards sit in each Leitner box (index 0 = box 1). */
+export function boxCounts(c: NCourse, p: Progress): number[] {
+  const counts = [0, 0, 0, 0, 0];
+  for (const card of c.studyCardById.values()) {
+    const st = p.cards[card.id];
+    if (st) counts[st.box - 1]++;
+  }
+  return counts;
 }
 
 export function cardsKnown(c: NCourse, p: Progress): { known: number; total: number } {

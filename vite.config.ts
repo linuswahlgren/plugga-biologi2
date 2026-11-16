@@ -7,6 +7,7 @@ import { resolve } from "node:path";
  * Two production builds from one source:
  *   --mode site    -> dist/site/index.html (+ manifest, service worker, icons in Phase 4)
  *   --mode backup  -> dist/plugga-biologi2.html (self-contained, works from file://, no service worker)
+ *   --mode e2e     -> dist/e2e/index.html, the site built with the test course (tests/fixtures/course.ts)
  * Both inline every script, style and font into a single HTML file.
  */
 const BACKUP_TMP = "dist/.backup";
@@ -28,16 +29,17 @@ function moveBackupFile(): Plugin {
 
 export default defineConfig(({ mode }) => {
   const isBackup = mode === "backup";
+  const isE2E = mode === "e2e";
   return {
     base: "./",
     publicDir: isBackup ? false : "public",
     define: {
-      __BUILD_TARGET__: JSON.stringify(isBackup ? "backup" : mode === "site" ? "site" : "dev"),
+      __BUILD_TARGET__: JSON.stringify(isBackup ? "backup" : mode === "site" || isE2E ? "site" : "dev"),
       __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
     },
     plugins: [viteSingleFile({ removeViteModuleLoader: true }), ...(isBackup ? [moveBackupFile()] : [])],
     build: {
-      outDir: isBackup ? BACKUP_TMP : "dist/site",
+      outDir: isBackup ? BACKUP_TMP : isE2E ? "dist/e2e" : "dist/site",
       emptyOutDir: true,
       target: "es2020",
       assetsInlineLimit: 100_000_000,
@@ -48,7 +50,11 @@ export default defineConfig(({ mode }) => {
     },
     // H: on school PCs is a DFS network share; resolving symlinks turns paths into UNC paths
     // that no longer match the project root. Keep paths as written.
-    resolve: { preserveSymlinks: true },
+    resolve: {
+      preserveSymlinks: true,
+      // The e2e build swaps the course for the test course.
+      alias: isE2E ? [{ find: /^.*\/content\/index\.ts$/, replacement: resolve("tests/fixtures/course.ts") }] : [],
+    },
     preview: { port: 4173, strictPort: true },
     server: { port: 5173, strictPort: true },
   };

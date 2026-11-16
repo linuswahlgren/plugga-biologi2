@@ -3,7 +3,8 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * npm test: builds first (pretest), then runs
  *  - "node":     unit specs without a browser (answer matching, markup, migration, content check …)
- *  - chromium, firefox, webkit: the built site via `vite preview`, and the backup file via file://
+ *  - chromium, firefox, webkit: the built site via `vite preview` (:4173), the backup file via file://,
+ *    and the site built with the test course (tests/fixtures/course.ts) on :4174 for the learning features
  */
 const e2e = /.*\.e2e\.ts/;
 
@@ -29,10 +30,8 @@ export default defineConfig({
     { name: "firefox", testMatch: e2e, use: { ...devices["Desktop Firefox"] } },
     { name: "webkit", testMatch: e2e, use: { ...devices["Desktop Safari"] } },
   ],
-  webServer: {
-    command: "npm run preview",
-    url: "http://localhost:4173/",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  webServer: [
+    { command: "npm run preview", url: "http://localhost:4173/", reuseExistingServer: !process.env.CI, timeout: 120_000 },
+    { command: "npm run preview:e2e", url: "http://localhost:4174/", reuseExistingServer: !process.env.CI, timeout: 120_000 },
+  ],
 });

@@ -98,11 +98,23 @@ export function href(route: Route): string {
 export const to = {
   overview: () => href({ view: "overview", query: {} }),
   part: (part: string, tab: PartTab = "lar", query: Query = {}) => href({ view: "part", part, tab, query }),
-  lesson: (part: string, lesson: string) => href({ view: "part", part, tab: "lar", query: { lektion: lesson } }),
+  lesson: (part: string, lesson: string, returnToSession = false) =>
+    href({ view: "part", part, tab: "lar", query: returnToSession ? { lektion: lesson, tillbaka: "1" } : { lektion: lesson } }),
   session: (mode: SessionMode, query: Query = {}) => href({ view: "session", mode, query }),
-  hub: (exam: string, section: HubSection | null = null) => href({ view: "hub", exam, section, query: {} }),
+  hub: (exam: string, section: HubSection | null = null, query: Query = {}) => href({ view: "hub", exam, section, query }),
   progress: () => href({ view: "progress", query: {} }),
 };
+
+/** Go to a hash route. Re-renders even when the hash is already the current one. */
+export function navigate(hash: string): void {
+  if (location.hash === hash || (hash === "#/" && !location.hash)) window.dispatchEvent(new HashChangeEvent("hashchange"));
+  else location.hash = hash;
+}
+
+/** Update the URL to match the view's state without re-rendering (settings in the session builder). */
+export function replaceHash(hash: string): void {
+  history.replaceState(history.state, "", hash);
+}
 
 export function onRoute(known: () => Known, listener: (r: Route) => void): () => void {
   const handler = () => listener(parseHash(location.hash, known()));

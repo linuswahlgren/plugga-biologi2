@@ -20,6 +20,8 @@ export interface CheckResult {
 export interface CheckOptions {
   /** Diagram ids that exist in src/diagrams. When given, label items must use one of them. */
   diagrams?: string[];
+  /** Marker numbers per diagram. When given, a label marker must be one the diagram draws. */
+  diagramMarkers?: Record<string, number[]>;
   /** Every string a student can see in the UI (from i18n), scanned for copy rules. */
   uiStrings?: string[];
   /** Minimum cards and quiz questions per part before a warning. */
@@ -179,6 +181,9 @@ export function checkCourse(input: Course, opts: CheckOptions = {}): CheckResult
       if (x.kind === "label") {
         if (opts.diagrams && !opts.diagrams.includes(x.diagram)) err(xw, `Diagrammet "${x.diagram}" finns inte.`);
         for (const m of x.markers) if (!m.answer?.trim()) err(xw, `Markering ${m.n} saknar begrepp.`);
+        const known = opts.diagramMarkers?.[x.diagram];
+        if (known) for (const m of x.markers) if (!known.includes(m.n)) err(xw, `Diagrammet "${x.diagram}" har ingen markering ${m.n}.`);
+        if (new Set(x.markers.map((m) => m.n)).size !== x.markers.length) err(xw, "Två markeringar har samma nummer.");
       }
       if (x.kind === "text" && (Array.isArray(x.answer) ? x.answer.length === 0 : !x.answer.trim())) err(xw, "Övningen saknar rätt svar.");
       if (x.kind === "self" && !x.solution.trim()) err(xw, "Övningen saknar exempelsvar.");

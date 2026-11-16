@@ -17,6 +17,9 @@ import { availableTabs, partTabs } from "../components/PartTabs.ts";
 import { lessonCard, type LessonCard } from "../components/LessonCard.ts";
 import { notesPanel } from "../components/NotesPanel.ts";
 import { emptyState } from "../components/EmptyState.ts";
+import { builderFor, partHost, runningView } from "./sessionHost.ts";
+import { savedRun } from "./host.ts";
+import { practicePanel } from "./practice.ts";
 
 export const TAB_LABEL: Record<PartTab, string> = {
   lar: sv.tabs.learn,
@@ -27,6 +30,17 @@ export const TAB_LABEL: Record<PartTab, string> = {
 
 export function partLabel(part: NPart): string {
   return `${sv.nav.part(part.n)} · ${part.title}`;
+}
+
+/** After "Läs mer" from a running session: a way back to it. */
+function returnCard(app: App): HTMLElement | null {
+  const s = app.store.get().session;
+  if (!s) return null;
+  return h("section", { class: "sk-card sk-card--sunken sk-stack sk-stack--2", "data-return": "" },
+    h("p", { class: "sk-eyebrow" }, sv.session.returnTitle),
+    h("p", null, s.label),
+    h("div", { class: "sk-btnrow" }, h("a", { class: "sk-btn sk-btn--primary", href: s.route }, icon("left", 18), sv.session.returnButton)),
+  );
 }
 
 function learnPanel(app: App, part: NPart, focusLesson: string | undefined, onChange: () => void): HTMLElement {
@@ -86,6 +100,9 @@ export function partView(app: App, part: NPart, requestedTab: PartTab, query: Re
   const exam = part.examRef;
   const tabs = availableTabs(part);
   const tab: PartTab = tabs.some((t) => t.tab === requestedTab) ? requestedTab : (tabs[0]?.tab ?? "lar");
+  const host = tab === "kort" || tab === "quiz" ? partHost(app, part, tab) : null;
+  const run = host ? savedRun(app, host, query) : null;
+  if (host && run) return runningView(app, host, run);
   const m = partMastery(part, app.store.get(), app.today());
 
   const status = h("span", null, statusTag(m.status));
@@ -115,8 +132,11 @@ export function partView(app: App, part: NPart, requestedTab: PartTab, query: Re
   if (part.dates) eyebrowParts.push(part.dates);
 
   let panel: HTMLElement;
-  if (tab === "lar") panel = learnPanel(app, part, query.lektion, refresh);
-  else panel = emptyState(TAB_LABEL[tab], sv.part.comingInPhase);
+  if (tab === "lar") {
+    const back = query.tillbaka === "1" ? returnCard(app) : null;
+    panel = back ? h("div", { class: "sk-stack" }, back, learnPanel(app, part, query.lektion, refresh)) : learnPanel(app, part, query.lektion, refresh);
+  } else if (host) panel = builderFor(app, host, query);
+  else panel = practicePanel(app, part.practice, { showPart: false, path: to.part(part.id, "ova"), query, onChange: refresh });
 
   const page = h(
     "div",

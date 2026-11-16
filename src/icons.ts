@@ -31,6 +31,9 @@ const ICONS = {
   print: ["M7 9V3.5h10V9", "M7 17H4.5V9h15v8H17", "M7 14h10v6.5H7z"],
   flag: ["M5.5 21V4", "M5.5 4.5h11l-2 4 2 4h-11"],
   chart: ["M4 20h16", "M7 16.5v-5", "M12 16.5V7", "M17 16.5v-8"],
+  up: ["M6 14.5l6-6 6 6"],
+  down: ["M6 9.5l6 6 6-6"],
+  grip: ["M9 5.75v.5", "M15 5.75v.5", "M9 11.75v.5", "M15 11.75v.5", "M9 17.75v.5", "M15 17.75v.5"],
 } as const;
 
 export type IconName = keyof typeof ICONS;

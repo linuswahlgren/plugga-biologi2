@@ -4,9 +4,11 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
 
 ## Status (2026-11-16)
 
-- **Phases 0 and 1 are done.** The approved plan, the decisions and the findings from the slide images are in `docs/plan.md`. **Read it before continuing.**
-- **Next is Phase 2 (learning features, BUILD.md §11).** The user wants to do it on their own computer (Linus2026). Follow BUILD.md's checkpoints (⏸). Phase 2 has none, so go on to Phase 3 and stop at its ⏸.
-- **One decision waits for the user:** the flower labels on Del 3 bild 5 (kronblad, foderblad, knapp, stift, sträng) come from the material. The proposal is to cite that slide instead of tagging them "Kompletterande". Ask before Phase 3 if it isn't settled.
+- **Phases 0, 1 and 2 are done.** The approved plan, the decisions and the findings from the slide images are in `docs/plan.md`. **Read it before continuing.**
+- **Next is Phase 3 (content, BUILD.md §11):** all six Prov 1 parts, the hub, the glossary, the fact-check subagent, then stop at its ⏸. It needs the material (below).
+- **The learning features are tested on a test course,** not on real content: `tests/fixtures/course.ts` keeps the real course and Del 1's lessons and swaps in a fixed set of items, plus a Prov 2 part. `vite build --mode e2e` builds it to `dist/e2e`, served on :4174 for `tests/learning.e2e.ts` and `npm run shots`. It is never shipped. Real items use plain ids (`d1-k01`); the fixture uses `x` ids (`d1-xk01`) so they never collide.
+- **Decided 2026-11-16:** the flower labels on Del 3 bild 5 (kronblad, foderblad, knapp, stift, sträng) come from the material. Cite that slide; they are **not** tagged "Kompletterande".
+- **On Linus2026** the six lesson files were copied from Downloads to `material/prov1/`. The summary deck `Biologi nivå 2.pptx` is not there (optional: facts come from the lesson decks, and `docs/plan.md` records what the summary deck adds). Python is not installed, so `material/_extracted/prov1/` must be made with `npm run extract` after installing Python, or copied from the school PC.
 - **On a new computer,** check that `material/prov1/` and `material/_extracted/prov1/` exist; they are never in Git. If they're missing, ask the user to copy them before any content work. `npm run extract` rebuilds `_extracted` from `material/prov1`.
 
 ## Never change
@@ -29,10 +31,11 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
 | --- | --- |
 | `npm run dev` | Dev server on http://localhost:5173 |
 | `npm run build` | check + typecheck + `dist/site/index.html` + `dist/plugga-biologi2.html` |
+| `npm run build:e2e` | The site with the test course, `dist/e2e/index.html` (tests and screenshots only) |
 | `npm run preview` | Serve `dist/site` on http://localhost:4173 |
 | `npm run check` | Content check (exits 1 on errors; `-- --alla` lists every warning) |
-| `npm test` | Build, then Playwright: unit specs + Chromium, Firefox, WebKit |
-| `npm run shots` | Screenshots to `review/<fas>/` (set `PLUGGA_PHASE`) |
+| `npm test` | Build (site, backup, test course), then Playwright: unit specs + Chromium, Firefox, WebKit |
+| `npm run shots` | Screenshots of the test course build to `review/<fas>/` (set `PLUGGA_PHASE`, default `fas2`) |
 | `npm run extract` | `material/prov1` → `material/_extracted/prov1` (Markdown + `media/`) |
 
 ## Folder map
@@ -41,12 +44,14 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
 - `src/` holds the app:
   - `main.ts` is the shell and routing. `router.ts` is the hash router. `markup.ts` renders text marks.
   - `check.ts` is the content check. `answer.ts` does answer matching. `mastery.ts` and `recommend.ts` hold the progress rules.
+  - `session.ts` holds the session rules (settings in the URL, pools, sampling and interleaving, Mina missar, best score, saved sessions). `srs.ts` holds the Leitner boxes. Both are pure and unit-tested.
+  - `views/sessionHost.ts` and `views/host.ts` host card and quiz sessions on part tabs, `#/omgang/…` and the hub's Provsimulering. A running session lives in `Progress.session`; its route is the host path + `?fortsatt=1`. `views/quizRun.ts`, `views/cardRun.ts` and `views/practice.ts` run them.
   - `store/` holds storage, progress v2 and the migration. `components/` has one file per component. `views/` holds the pages. `styles/` holds the CSS. `diagrams/` holds the label diagrams.
 - `scripts/`:
   - `extract_material.py` uses only the Python stdlib.
   - `check-content.ts` runs directly with Node 24+.
   - `run.mjs` is the tool runner (see below).
-- `tests/`: `*.unit.ts` run in Node, `*.e2e.ts` run in three browsers, and `shots.spec.ts` takes the screenshots.
+- `tests/`: `*.unit.ts` run in Node, `*.e2e.ts` run in three browsers (`app.e2e.ts` on the real build, `learning.e2e.ts` on the test course), and `shots.spec.ts` takes the screenshots. `fixtures/course.ts` is the test course.
 
 ## Text marks (BUILD.md §6.3 plus one Plugga extension)
 

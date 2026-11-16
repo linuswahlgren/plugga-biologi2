@@ -38,12 +38,19 @@ Sources are the original deck slides. Quiz levels are about 50 % E / 35 % C / 15
 The extractor exports slide pictures to `material/_extracted/prov1/media/`. These were checked:
 
 - **Del 2 bild 2–3:** "Vad händer med trädet?" shows a girdled tree, and "Ledtråd…" shows the bark layers with the living phloem. Girdling cites these slides.
-- **Del 3 bild 5:** a flower with Swedish labels: kronblad, foderblad, fruktämne, märke, knapp, pistiller, stift, sträng, ståndare, frukt, fröämne, fröhus, frö. These terms come from the material, not from the supplement. *Waiting for the user's OK:* cite this slide and don't tag kronblad/foderblad as supplementary (BUILD §4.7 assumed they would need the tag).
+- **Del 3 bild 5:** a flower with Swedish labels: kronblad, foderblad, fruktämne, märke, knapp, pistiller, stift, sträng, ståndare, frukt, fröämne, fröhus, frö. These terms come from the material, not from the supplement. **Decided by the user 2026-11-16:** cite this slide; kronblad, foderblad, knapp, stift and sträng are taught from the material and are **not** tagged "Kompletterande" (BUILD §4.7 assumed they would need the tag).
 - **Intro bild 6:** plant cell vs animal cell with labels. The plant cell shows cell wall, cell membrane, chloroplast, vacuole, nucleus, mitochondrion, cytoplasm and plasmodesma.
 - **Intro bild 20:** plasmolysed, flaccid and turgid cells in hypertonic, isotonic and hypotonic solutions.
 - **Del 1 bild 5:** leaf, stem and root, each with dermal, ground and vascular tissue. So the organs are in the material (as an image).
 - **Del 2 bild 5:** chloroplast with outer and inner membrane, granum, lumen, stroma and thylakoids.
 - **Del 3 bild 7:** the angiosperm life cycle with embryo 2n, endosperm 3n and seed coat 2n.
+
+## Phase 2 notes
+
+- **Diagrams** (`src/diagrams/`): `cell`, `leaf`, `chloroplast` and `flower`, each with numbered marker positions (listed in `docs/components.md`). Content picks which numbers a `label` item shows and names them, so the terms still come from the material in Phase 3.
+- **Practice** is a list per part (and across parts on `#/omgang/ova`) with a level filter, not a timed session. Cards and quiz use the session builder.
+- **Best score per part:** a session counts for a part when it had at least 10 of that part's questions, or all of them (BUILD §4.6, read per part so mixed sessions work).
+- **Glossary terms as cards:** a term without its own `card` is practised as a card with the term's id, so "Öva som kort" and "Kort att repetera idag" include it.
 
 ## Phase status
 
@@ -51,7 +58,7 @@ The extractor exports slide pictures to `material/_extracted/prov1/media/`. Thes
 | --- | --- |
 | 0 · Read and plan | Done, approved 2026-11-16 |
 | 1 · Foundation | Done (commit `0beed4e`); checkpoint shown with screenshots in `review/fas1/` |
-| 2 · Learning features | Next; waiting for the user's OK |
-| 3 · Content | |
+| 2 · Learning features | Done 2026-11-16 (on Linus2026); screenshots of the test course in `review/fas2/` |
+| 3 · Content | Next. On Linus2026 the six lesson files are in `material/prov1/`; `_extracted/` still has to be made (`npm run extract`, needs Python) |
 | 4 · Sharing and keeping progress | |
 | 5 · Quality and handover | |

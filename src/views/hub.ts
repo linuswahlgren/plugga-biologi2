@@ -8,12 +8,16 @@ import { h } from "../dom.ts";
 import { sv } from "../i18n/sv.ts";
 import type { App, ViewResult } from "../app.ts";
 import type { Exam } from "../types.ts";
-import { to, type HubSection } from "../router.ts";
+import { to, type HubSection, type Query } from "../router.ts";
 import { pageHead } from "../components/PageHead.ts";
 import { examCountdown } from "../components/ExamCountdown.ts";
 import { emptyState } from "../components/EmptyState.ts";
 import { hubLabel } from "../components/Sidebar.ts";
 import { longDayMonth } from "../format.ts";
+import { glossary } from "../components/Glossary.ts";
+import { studyQuestions } from "../components/StudyQuestions.ts";
+import { builderFor, runningView, simulationHost } from "./sessionHost.ts";
+import { savedRun } from "./host.ts";
 
 const SECTION_LABEL: Record<HubSection, string> = {
   lasanvisningar: sv.hubTabs.reading,
@@ -84,10 +88,13 @@ function aboutSection(app: App, exam: Exam): HTMLElement {
   );
 }
 
-export function hubView(app: App, exam: Exam, requested: HubSection | null): ViewResult {
+export function hubView(app: App, exam: Exam, requested: HubSection | null, query: Query = {}): ViewResult {
   const c = app.course;
   const sections = hubSections(app, exam);
   const section = requested && sections.includes(requested) ? requested : (sections[0] ?? null);
+  const simHost = section === "simulering" ? simulationHost(app, exam) : null;
+  const run = simHost ? savedRun(app, simHost, query) : null;
+  if (simHost && run) return runningView(app, simHost, run);
   const title = hubLabel(exam);
   const isUpcoming = exam.status === "upcoming";
   const hasParts = c.partsOf(exam.id).length > 0;
@@ -96,7 +103,9 @@ export function hubView(app: App, exam: Exam, requested: HubSection | null): Vie
   if (!section) body = emptyState(title, sv.hub.leadUpcoming);
   else if (section === "lasanvisningar") body = readingSection(exam);
   else if (section === "om") body = aboutSection(app, exam);
-  else body = emptyState(SECTION_LABEL[section], sv.part.comingInPhase);
+  else if (section === "fragor") body = studyQuestions(app, exam);
+  else if (section === "begrepp") body = glossary(app, exam);
+  else body = builderFor(app, simHost!, query);
 
   const nav = sections.length > 1
     ? h("nav", { class: "sk-tabs", "aria-label": title },

@@ -10,10 +10,12 @@
     "preview": "node scripts/run.mjs vite preview --mode site --port 4173 --strictPort",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "check": "node scripts/check-content.ts",
-    "pretest": "npm run build",
+    "pretest": "npm run build && npm run build:e2e",
     "test": "node scripts/run.mjs playwright test",
-    "shots": "node scripts/run.mjs playwright test -c playwright.shots.config.ts",
-    "extract": "python -I scripts/extract_material.py material/prov1 material/_extracted/prov1"
+    "shots": "npm run build:e2e && node scripts/run.mjs playwright test -c playwright.shots.config.ts",
+    "extract": "python -I scripts/extract_material.py material/prov1 material/_extracted/prov1",
+    "build:e2e": "node scripts/run.mjs vite build --mode e2e",
+    "preview:e2e": "node scripts/run.mjs vite preview --mode e2e --port 4174 --strictPort"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

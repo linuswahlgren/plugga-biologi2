@@ -61,6 +61,11 @@ export function isoWeek(iso: string): number {
   return Math.ceil(((date.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
 }
 
+/** A number with a Swedish decimal comma: 0.9 -> "0,9". */
+export function decimal(n: number): string {
+  return String(n).replace(".", ",").replace("-", "−");
+}
+
 export function percent(n: number): string {
   return sv.format.percent(n);
 }

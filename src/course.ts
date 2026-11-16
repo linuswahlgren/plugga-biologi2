@@ -43,8 +43,12 @@ export interface NCourse {
   cardById: Map<string, NCard>;
   practiceById: Map<string, NPractice>;
   studyById: Map<string, { q: StudyQuestion; exam: Exam }>;
+  /** Every card plus a card for each glossary term that has none of its own ("Öva som kort"). */
+  studyCardById: Map<string, NCard>;
   partsOf(examId: string): NPart[];
   termsOf(partId: string): Term[];
+  /** The card that practises a term: its own card if it names one, else one made from the term. */
+  termCard(term: Term): NCard;
 }
 
 /** FNV-1a, base36. Stable across runs. */
@@ -118,6 +122,13 @@ export function loadCourse(course: Course): NCourse {
     list.push(t);
     termsByPart.set(t.week, list);
   }
+  const termCard = (t: Term): NCard =>
+    (t.card ? cardById.get(t.card) : undefined) ?? { id: t.id, front: t.term, back: t.definition, lesson: t.lesson, supplement: t.supplement, partId: t.week };
+  const studyCardById = new Map(cardById);
+  for (const t of glossary) {
+    const card = termCard(t);
+    if (!studyCardById.has(card.id)) studyCardById.set(card.id, card);
+  }
 
   return {
     raw: course,
@@ -138,8 +149,10 @@ export function loadCourse(course: Course): NCourse {
     cardById,
     practiceById,
     studyById,
+    studyCardById,
     partsOf: (examId) => byExam.get(examId) ?? [],
     termsOf: (partId) => termsByPart.get(partId) ?? [],
+    termCard,
   };
 }
 

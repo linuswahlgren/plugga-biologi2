@@ -6,6 +6,7 @@
 import "./styles/tokens.css";
 import "./styles/bundle.css";
 import "./styles/app.css";
+import "./styles/learn.css";
 import "./styles/print.css";
 
 import { course as rawCourse } from "../content/index.ts";
@@ -27,8 +28,9 @@ import { overviewView } from "./views/overview.ts";
 import { partView } from "./views/part.ts";
 import { hubView } from "./views/hub.ts";
 import { progressView } from "./views/progress.ts";
-import { notFoundView, sessionPlaceholderView } from "./views/simple.ts";
-import { DIAGRAM_IDS } from "./diagrams/index.ts";
+import { notFoundView } from "./views/simple.ts";
+import { sessionPageView } from "./views/sessionPage.ts";
+import { DIAGRAM_IDS, DIAGRAM_MARKERS } from "./diagrams/index.ts";
 
 const course = loadCourse(rawCourse);
 const kv = createStorage();
@@ -36,7 +38,7 @@ const store = createStore(kv, course.id);
 
 // ---------- Content check at runtime ----------
 const showWarnings = __BUILD_TARGET__ === "dev" || /[?&]kontroll\b/.test(location.search + location.hash);
-const checkResult = checkCourse(rawCourse, { diagrams: DIAGRAM_IDS, uiStrings: showWarnings ? uiStringsOf(sv) : [] });
+const checkResult = checkCourse(rawCourse, { diagrams: DIAGRAM_IDS, diagramMarkers: DIAGRAM_MARKERS, uiStrings: showWarnings ? uiStringsOf(sv) : [] });
 
 // ---------- Theme and accent ----------
 const root = document.documentElement;
@@ -136,11 +138,11 @@ function viewFor(route: Route): ViewResult {
       return partView(app, part, route.tab, route.query);
     }
     case "hub":
-      return hubView(app, course.examById.get(route.exam)!, route.section);
+      return hubView(app, course.examById.get(route.exam)!, route.section, route.query);
     case "progress":
       return progressView(app);
     case "session":
-      return sessionPlaceholderView(app, { kort: sv.tabs.cards, quiz: sv.tabs.quiz, ova: sv.tabs.practice }[route.mode]);
+      return sessionPageView(app, route.mode, route.query);
     case "notfound":
       return notFoundView(app);
   }

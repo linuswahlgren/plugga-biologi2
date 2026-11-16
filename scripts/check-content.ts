@@ -5,10 +5,10 @@
 import { course } from "../content/index.ts";
 import { checkCourse, uiStringsOf } from "../src/check.ts";
 import { sv } from "../src/i18n/sv.ts";
-import { DIAGRAM_IDS } from "../src/diagrams/index.ts";
+import { DIAGRAM_IDS, DIAGRAM_MARKERS } from "../src/diagrams/index.ts";
 
 const verbose = process.argv.includes("--alla") || process.argv.includes("--all");
-const result = checkCourse(course, { diagrams: DIAGRAM_IDS, uiStrings: uiStringsOf(sv) });
+const result = checkCourse(course, { diagrams: DIAGRAM_IDS, diagramMarkers: DIAGRAM_MARKERS, uiStrings: uiStringsOf(sv) });
 
 const parts = course.weeks.length;
 const lessons = course.weeks.reduce((n, w) => n + w.lessons.length, 0);
