@@ -1,8 +1,8 @@
 /**
  * Diagram registry for `label` practice items. Each diagram is an original inline SVG in the
  * design system's line style (no copied images), with numbered marker positions. Content picks
- * which numbers to show and names them. Prov 2 cell-biology diagrams are added the same way:
- * one file per diagram, registered here.
+ * which numbers to show and names them. Prov 2 added mitochondrion (Del 7) and
+ * animalcell (Del 8) the same way: one file per diagram, registered here.
  */
 import { s } from "../dom.ts";
 import type { DiagramDef } from "./draw.ts";
@@ -10,8 +10,10 @@ import { cell } from "./cell.ts";
 import { leaf } from "./leaf.ts";
 import { chloroplast } from "./chloroplast.ts";
 import { flower } from "./flower.ts";
+import { mitochondrion } from "./mitochondrion.ts";
+import { animalcell } from "./animalcell.ts";
 
-const DIAGRAMS: DiagramDef[] = [cell, leaf, chloroplast, flower];
+const DIAGRAMS: DiagramDef[] = [cell, leaf, chloroplast, flower, mitochondrion, animalcell];
 const byId = new Map(DIAGRAMS.map((d) => [d.id, d]));
 
 export const DIAGRAM_IDS: string[] = DIAGRAMS.map((d) => d.id);

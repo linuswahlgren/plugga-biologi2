@@ -87,6 +87,38 @@ The extractor exports slide pictures to `material/_extracted/prov1/media/`. Thes
   - Del 1 had one A-level quiz question; two were added (`d1-q17` osmosis across a sugar membrane, `d1-q18` destillerat vatten vs isoton), so Del 1 is 18 questions, 8 E / 7 C / 3 A. Both were fact-checked by a separate subagent.
   - Left as is: the content check's messages live in `src/check.ts`, not `sv.ts` (they are Swedish and only shown when the content is broken); the offline test runs in Chromium only (Playwright cannot take Firefox and WebKit offline with a service worker reliably); start-up timing is Chromium only.
 
+## Prov 2
+
+Added part by part with `/ny-del`. The material is in `material/prov2/Cellbiologi/` (not in Git), extracted to `material/_extracted/prov2/`.
+
+| Id | Title | Lessons (source) | Cards | Quiz (E/C/A) | Practice | Key points |
+| --- | --- | --- | --- | --- | --- | --- |
+| d7 | Cellens molekyler och cellandningen (v. 46) | 6: proteiner och aminosyror (Cellbiologi del 1, 1–2, 6–9) · kolhydrater, nukleotider och lipider (10–13) · ATP, aktiveringsenergi och enzymer (14–21) · glykolysen och citronsyracykeln (22, 24–29, 32) · andningskedjan och mitokondrien (30–35) · jäsning, mjölksyra och Coricykeln (2, 11, 14, 22–23, 35–39) | 25 | 20 (10/7/3) | 10: label mitokondrie, order cellandningen, order citronsyracykeln, 2 self, 2 number (6 CO2, 2 ATP netto), 3 text | 8 |
+| d8 | Cellens struktur och kommunikation (v. 47) | 6: cellmembranet och dess proteiner (Cellens struktur 1–4) · transport genom membranet (5–9) · organellerna och endomembransystemet (Cellbiologi del 1, 3–5; Cellens struktur 10–15) · cellskelettet och motorproteinerna (16–22) · signaler, receptorer och cellkopplingar (23–30; Cellbiologi del 1, 13) · differentiering, apoptos och stamceller (31–34) | 25 | 20 (10/7/3) | 10: label djurcell, order proteinets väg ut, order signalen, 3 self, 4 text | 8 |
+
+- **Decided with the user 2026-11-17:** one part per deck. Cellbiologi del 1 was last week (v. 46), Cellens struktur och kommunikation this week (v. 47); the parts show the week in the eyebrow (`Week.dates`). The organelle overview in Cellbiologi del 1, bild 3–5, belongs to Del 8.
+- **No course document yet** (the user says it comes later). Until it is published:
+  - `readingList` is the book pages the slides name: s. 44–46 and 90–98 (Cellens struktur bild 1), s. 68–80 (Cellbiologi del 1 bild 23; bild 35 names s. 78–80). `sv.hub.readingIntro` now says "så som läraren har angett dem", which is true for both exams.
+  - `themes` is not set, so the glossary groups the 83 Prov 2 terms by part (theme = part title). No term has `extra`, since there is no concept list to be "utöver".
+  - The 7 study questions (`prov2-iq01`–`iq07`) are the questions on the group task "Bygg en modell av cellandningen" (docx), with model answers from Del 7.
+  - When it arrives: replace the reading list, set `themes` and move each term to its theme, add the missing terms and the document's questions after `prov2-iq07`. Never renumber or reuse an id.
+- **Glossary ids** that Prov 1 already uses get `-prov2`: `t-atp-prov2`, `t-cellandning-prov2`, `t-totipotenta-prov2`.
+- **Corrections** on the Prov 2 hub's "Om materialet" (each backed by the deck's own pictures):
+  - Cellbiologi del 1 bild 24: CO2 forms when pyruvic acid becomes acetyl-CoA and in the citric acid cycle, not in all three steps.
+  - Bild 16–17: every reaction needs activation energy (bild 18–19); ATP supplies energy to energy-requiring reactions, enzymes lower the activation energy.
+  - Bild 32: oxygen takes the electrons and forms water; ATP synthase makes ATP (bild 30–31).
+- **Small fixes, no correction row:**
+  - O2 + 4H+ + 4e- → 2H2O, and hemoglobin as "fyra globulära proteiner".
+  - Glycolysis gives 2 ATP *netto*; omättad means at least one double bond.
+  - Endoterm/exoterm is kept as the slides' words, with a supplementary note on endergon/exergon.
+  - Dynein makes neighbouring microtubules slide (the picture on bild 20), and nerve cells signal chemically.
+  - Tight junctions are sealed, not fused; fat-soluble substances such as steroid hormones pass the membrane.
+  - Spellings: dynein, oxalättiksyra.
+- **Supplementary:** the endergon/exergon note (d7-l3) and what "unipotent" means (d8-l6, `t-unipotenta`). The deck never writes out the formula for cellular respiration; bild 21 shows glucose + O2 → CO2 + H2O + ATP as a picture, which is used.
+- **Diagrams:** `mitochondrion` (labels from bild 33) and `animalcell` (organelles from bild 4), drawn in `src/diagrams/`. The test course's Prov 2 part has one label item for each.
+- **Fact-check:** two separate subagents compared Del 7 (with the hub) and Del 8 with the material and the slide pictures. Every finding was fixed except: lysosomes and programmed cell death, channels closing at high or low concentration, and peroxisomes in the endomembrane system are kept as the teacher teaches them (simplified, not wrong for the course).
+- **Tests:** the real-site specs now expect Prov 2 to have parts (overview hero "Läs Proteiner och aminosyror", the Prov 2 hub with reading list, 7 study questions and 3 corrections). `quality.e2e.ts` walks the Prov 2 hub's sections and runs axe on `#/d7/ova` and `#/prov2/fragor`.
+
 ## Phase status
 
 | Phase | Status |

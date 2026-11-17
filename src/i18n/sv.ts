@@ -171,7 +171,7 @@ export const sv = {
     titleUpcoming: (examTitleLower: string, date: string) => (date ? `Inför ${examTitleLower} · ${date}` : `Inför ${examTitleLower}`),
     leadDone: (topic: string) => `Allt du behöver för att repetera ${topic.toLowerCase()}.`,
     leadUpcoming: "Här samlas allt inför provet när materialet läggs upp.",
-    readingIntro: "Sidorna i kursboken som hör till provet, precis som de står i kursens läsanvisningar.",
+    readingIntro: "Sidorna i kursboken som hör till provet, så som läraren har angett dem.",
     lecturesHeading: "Genomgångar",
     aboutIntro: "Här ser du var Plugga medvetet avviker från lektionsmaterialet och varför. Texten i Plugga följer den rättade uppgiften.",
     aboutWhere: "Var",

@@ -364,7 +364,9 @@ test.describe("practice (§4.7)", () => {
   });
 
   test("practice across parts with a level filter", async ({ page }) => {
-    await open(page, "#/omgang/ova");
+    // The page starts on the upcoming exam (the test course's Prov 2 has 2 diagram items), so pick
+    // Prov 1: 5 items in Del 1 and 3 in Del 2.
+    await open(page, "#/omgang/ova?urval=prov:prov1");
     await expect(page.locator("[data-practice-summary]")).toHaveText("8 övningar · 0 lösta");
     await page.locator("[data-control=niva] .sk-chip", { hasText: /^C$/ }).click();
     await expect(page.locator("[data-practice-summary]")).toHaveText("2 övningar · 0 lösta");

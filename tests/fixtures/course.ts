@@ -110,7 +110,17 @@ const fixtureD7: Week = {
     { id: "d7-xq01", level: "E", lesson: "d7-l1", q: "Vilken organell innehåller cellens arvsmassa?", options: ["Cellkärnan", "Vakuolen", "Kloroplasten", "Cellväggen"], answer: "Cellkärnan", explain: "Arvsmassan finns i cellkärnan." },
     { id: "d7-xq02", level: "E", lesson: "d7-l1", q: "Vad omger alla celler?", options: ["En cellvägg", "Ett cellmembran", "En kloroplast", "En vakuol"], answer: "Ett cellmembran", explain: "Alla celler omges av ett cellmembran. Bara vissa har cellvägg." },
   ],
-  practice: [],
+  // One label item per Prov 2 diagram, so "uses every diagram" covers them.
+  practice: [
+    {
+      id: "d7-xp1", kind: "label", level: "E", lesson: "d7-l1", diagram: "mitochondrion", q: "Namnge delarna i mitokondrien.",
+      markers: [{ n: 1, answer: "Yttre membran" }, { n: 2, answer: "Inre membran" }, { n: 4, answer: "Matrix" }, { n: 5, answer: "Cristae" }],
+    },
+    {
+      id: "d7-xp2", kind: "label", level: "E", lesson: "d7-l1", diagram: "animalcell", q: "Namnge delarna i djurcellen.",
+      markers: [{ n: 1, answer: "Cellmembran" }, { n: 3, answer: "Cellkärna" }, { n: 6, answer: "Golgiapparaten" }, { n: 7, answer: "Mitokondrie" }],
+    },
+  ],
   keyPoints: [],
 };
 

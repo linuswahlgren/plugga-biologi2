@@ -29,6 +29,7 @@ Ask once which exam the material belongs to, with `currentExam` as the first, re
 python -I scripts/extract_material.py material/<exam> material/_extracted/<exam>
 ```
 
+- The script reads one folder, not its subfolders. If the user put the files in a subfolder (Prov 2's are in `material/prov2/Cellbiologi/`), give that folder as the source.
 - Read every new Markdown file in full. Slide numbers are the `## bild N` headings.
 - Look at slide images in `media/` where the text is thin (diagrams, labels, tables in pictures).
 - PDFs are not extracted by the script: read them with the Read tool.

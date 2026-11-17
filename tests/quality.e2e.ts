@@ -14,7 +14,8 @@ const QUIZ = new Map(course.weeks.flatMap((w) => w.quiz).map((q) => [q.id, q]));
 const ROUTES = [
   "#/",
   ...PARTS.flatMap((p) => [`#/${p}`, `#/${p}/kort`, `#/${p}/quiz`, `#/${p}/ova`]),
-  "#/prov1", "#/prov1/fragor", "#/prov1/begrepp", "#/prov1/simulering", "#/prov1/om", "#/prov2",
+  "#/prov1", "#/prov1/fragor", "#/prov1/begrepp", "#/prov1/simulering", "#/prov1/om",
+  "#/prov2", "#/prov2/fragor", "#/prov2/begrepp", "#/prov2/simulering", "#/prov2/om",
   "#/framsteg", "#/omgang/kort", "#/omgang/quiz", "#/omgang/ova", "#/finns-inte",
 ];
 
@@ -148,7 +149,7 @@ test.describe("accessibility at three sizes, light and dark (§10 axe)", () => {
       test(`${size.width} × ${size.height}, ${scheme}`, async ({ page }) => {
         await page.setViewportSize(size);
         await page.emulateMedia({ colorScheme: scheme });
-        for (const hash of ["#/", "#/d3", "#/d3/quiz", "#/d3/ova", "#/d4/ova", "#/prov1/fragor", "#/prov1/begrepp", "#/framsteg"]) {
+        for (const hash of ["#/", "#/d3", "#/d3/quiz", "#/d3/ova", "#/d4/ova", "#/d7/ova", "#/prov1/fragor", "#/prov1/begrepp", "#/prov2/fragor", "#/framsteg"]) {
           await open(page, hash);
           const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
           expect(r.violations.map((v) => `${hash} ${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);

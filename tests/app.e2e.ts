@@ -15,8 +15,9 @@ test.describe("overview", () => {
     await expect(page.locator("main h1")).toHaveText("Växtfysiologi och cellbiologi");
     await expect(page.locator("main .sk-pagehead .sk-eyebrow")).toHaveText(/biologi 2/i);
     await expect(page.locator("[data-countdown=prov2] h2")).toHaveText("Prov 2 om 21 dagar · mån 7 dec");
-    await expect(page.locator("[data-countdown=prov2]")).toContainText("Materialet till prov 2 läggs upp här när ni börjar arbeta med det. Repetera prov 1 så länge.");
-    await expect(page.locator(".sk-hero h2")).toHaveText("Repetera Del 1");
+    // Prov 2 has parts, so the countdown has no empty text and the next step is its first lesson.
+    await expect(page.locator("[data-countdown=prov2]")).not.toContainText("Materialet till prov 2");
+    await expect(page.locator(".sk-hero h2")).toHaveText("Läs Proteiner och aminosyror");
     await expect(page.locator(".sk-nav__grouphead").first()).toHaveText(/prov 2 · 7 dec/i);
     await expect(page.locator(".sk-nav__grouphead").nth(1)).toHaveText(/prov 1 · repetera/i);
     await expect(page.getByText("Så funkar Plugga")).toBeVisible();
@@ -99,13 +100,19 @@ test.describe("part page", () => {
 });
 
 test.describe("exam hubs", () => {
-  test("Prov 2 shows the countdown and the empty state", async ({ page }) => {
+  test("Prov 2 hub: countdown, reading list, study questions and corrections", async ({ page }) => {
     const g = guard(page);
     await open(page, "#/prov2");
     await expect(page.locator("main h1")).toHaveText("Inför prov 2 · 7 december");
     await expect(page.locator("[data-countdown=prov2]")).toContainText("Prov 2 om 21 dagar · mån 7 dec");
-    await page.getByRole("link", { name: "Repetera prov 1" }).last().click();
-    await expect(page.locator("main h1")).toHaveText("Repetera prov 1");
+    await expect(page.locator(".sk-tabs .sk-tab")).toHaveText(["Läsanvisningar", "Instuderingsfrågor", "Begreppslista", "Provsimulering", "Om materialet"]);
+    await expect(page.locator(".sk-readinglist li")).toHaveText(["s. 44–46", "s. 68–80", "s. 90–98"]);
+    await page.getByRole("link", { name: "Instuderingsfrågor" }).click();
+    await expect(page.locator("[data-study-known]")).toHaveText("0 av 7 kan jag");
+    await page.getByRole("link", { name: "Om materialet" }).click();
+    await expect(page).toHaveTitle("Om materialet – Inför prov 2 · 7 december – Biologi 2 | Plugga");
+    await expect(page.locator(".sk-table tbody tr")).toHaveCount(3);
+    await expect(page.locator(".sk-table")).toContainText("acetyl-CoA");
     g.done();
   });
 
