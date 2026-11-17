@@ -96,4 +96,4 @@ The extractor exports slide pictures to `material/_extracted/prov1/media/`. Thes
 | 2 · Learning features | Done 2026-11-16 (on Linus2026); screenshots of the test course in `review/fas2/` |
 | 3 · Content | Done 2026-11-16; approved by the user (they started Phase 4) |
 | 4 · Sharing and keeping progress | Done 2026-11-16 (no checkpoint) |
-| 5 · Quality and handover | Done 2026-11-17 locally; waiting at the checkpoint for the user to publish (see README.md, "Första publiceringen") |
+| 5 · Quality and handover | Done 2026-11-17; published the same day (workflow run green, live site checked: version, routes, no errors or other-site requests, progress kept after reload, offline after one visit) |

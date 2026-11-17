@@ -4,8 +4,8 @@ Study platform for one class: **Biologi 2 – Växtfysiologi och cellbiologi**. 
 
 ## Status (2026-11-17)
 
-- **Phases 0–5 are done** (Phase 5 locally). The approved plan, the decisions, the findings from the slide images and the notes per phase are in `docs/plan.md`. **Read it before continuing.**
-- **Waiting at the Phase 5 ⏸ checkpoint for the first publication.** The user signs in to GitHub, creates the public repository `linuswahlgren/plugga-biologi2` (empty), sets Settings › Pages › Source to GitHub Actions, and pushes (`README.md`, "Första publiceringen"). Never push without asking.
+- **Phases 0–5 are done.** The approved plan, the decisions, the findings from the slide images and the notes per phase are in `docs/plan.md`. **Read it before continuing.**
+- **Published 2026-11-17** at https://linuswahlgren.github.io/plugga-biologi2/ (repository `linuswahlgren/plugga-biologi2`, Pages source: GitHub Actions). Every push to `main` redeploys. Never push without asking.
 - **Next: Prov 2.** When the user has material in `material/prov2/`, use `/ny-del` (`.claude/skills/ny-del/SKILL.md`); publish with `/publicera`.
 - **The learning features are tested on a test course,** not on real content: `tests/fixtures/course.ts` keeps the real course and Del 1's lessons and swaps in a fixed set of items, its own upcoming Prov 2 (`currentExam: "prov2"`) and a Prov 2 part. When real Prov 2 parts arrive, only the real-site specs in `tests/app.e2e.ts` that expect Prov 2 to be empty change. `vite build --mode e2e` builds it to `dist/e2e`, served on :4174 for `tests/learning.e2e.ts` and `npm run shots`. It is never shipped. Real items use plain ids (`d1-k01`); the fixture uses `x` ids (`d1-xk01`) so they never collide.
 - **Decided 2026-11-16:** the flower labels on Del 3 bild 5 (kronblad, foderblad, knapp, stift, sträng) come from the material. Cite that slide; they are **not** tagged "Kompletterande".
